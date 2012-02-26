@@ -1,0 +1,149 @@
+#!/bin/bash
+
+function usage() {
+	echo "usage: $(basename $0) [[-i] <spot id>] [-d [<local dir>]]"
+	echo
+	echo "Creates a simplified windguru spot page."
+	echo
+	echo "	-i <spot id>	: makes page for windguru spot id"
+	echo "	-n <name>	: makes page for spot named in conf"
+	echo "	-d		: builds dependencies"
+	echo
+	echo "Outputs in: $DOCS"
+	echo "Deps    in: $DEPS"
+	echo "  " $(spots_list | head -3 | sed 's| |=|; s|\.html||')
+}
+
+function get_spot_page() {
+	spot=$1
+	if [ "${spot_id/[0-9]*/}" ]; then
+		echo "invalid spot id: $spot_id" >&2
+		exit 1
+	fi
+
+	base_url="http://www.windguru.cz/fr/index.php?sc=$spot"
+	options="go=1&vs=1&wj=kmh&tj=c&odh=0&doh=24&fhours=180&wrap=80"
+	SPOT_PAGE=$(curl -s "$base_url&$options")
+}
+
+function extract_spot_data() {
+	echo "$SPOT_PAGE" | egrep '^var wg_fcst_tab_data_1'
+}
+
+function make_spot_html() {
+	echo '<!DOCTYPE HTML>
+	<html manifest="windguru.manifest">
+	<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="initial-scale=1" id="scale"/>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<link rel="icon" href="icon.png"/>
+	<link rel="apple-touch-startup-image" href="splashscreen.png" />
+
+	<link rel="stylesheet" href="styles.min.css" type="text/css"/>
+	<link rel="stylesheet" href="spinner.css"    type="text/css"/>
+	<link rel="stylesheet" href="main.css"       type="text/css"/>
+	<script src="spinner.js"></script>
+	<script src="main.js"></script>
+
+	</head>
+
+	<body onload="init()">
+	<div id="loading-blinder"><script>init0()</script></div>
+	<div id="container"></div>
+	<script src="lang.js"></script>
+	<script src="scripts.min.js"></script>
+	</body>
+	</html>'
+}
+
+function extract_scripts_and_css() {
+	echo "$SPOT_PAGE" | awk '/<link /   {print $3}' | grep 'wgstyle'
+	echo "$SPOT_PAGE" | awk '/<script / {print $4}' | grep 'js/jquery-'
+	echo "$SPOT_PAGE" | awk '/<script / {print $4}' | grep 'js/wg_'
+	echo "$SPOT_PAGE" | awk '/<script / {print $4}' | grep 'js/jq_'
+}
+
+function make_deps() {
+	dir=$1
+	[ "$dir" ]  || { usage; exit 1; }
+	[ -d $dir ] || mkdir -p $dir || exit 1
+
+	ref_spot=43016
+	get_spot_page $ref_spot
+	cd $dir
+	[ ! -f deps.txt ] && touch deps.txt
+	dep_files=$(extract_scripts_and_css | sed 's/"[^"]*$//;s/.*"//')
+	if for f in $dep_files; do basename $f; done \
+	| diff -s - deps.txt > /dev/null; then
+		echo "No changes."
+		return
+	fi
+	mv deps.txt deps.txt.prev
+	for f in $dep_files; do
+		file=$(basename $f)
+		echo $file >> deps.txt
+		echo "/* $f */" > $file
+		curl -s "http://www.windguru.cz/$f" >> $file
+	done
+	grep css deps.txt | xargs cat > styles.min.css
+	grep js  deps.txt | xargs cat > scripts.min.js
+	echo "$SPOT_PAGE" | egrep '^var WgLang' > lang.js
+	echo "$SPOT_PAGE" | egrep '^var wgopts_1' > opts.js
+	#echo "$SPOT_PAGE" | egrep '^var WgUser' > user.js
+	egrep 'css|js' deps.txt | xargs rm -f
+	find $dir/ -type f -cmin 1
+}
+
+function spots_list() {
+	list_spots | while read l; do
+		parse_conf_line $l
+		echo $spot $page
+	done
+}
+
+function init() {
+	BASE_DIR=$(dirname "$0")
+	CONF_LIB="$BASE_DIR/conf.sh"
+	source "$CONF_LIB"
+	init_conf
+	mkdir -p "$DOCS"
+	mkdir -p "$DEPS"
+	mkdir -p "$DOCS/data"
+}
+
+function main() {
+	case $1 in
+	"")
+		usage
+		;;
+	-i)
+		spot_id=$2
+		output=$(spots_list | grep "$spot_id" | cut -f 2 -d ' ')
+		[ "$output" ] || output=$spot_id.html
+		get_spot_page $spot_id
+		make_spot_html		> "$DOCS/$output"
+		extract_spot_data	> "$DOCS/data/${output/.html/.data}"
+		;;
+	-d)
+		make_deps ${2:-$DEPS}
+		;;
+	-n)
+		if ! spots_list | grep -q "$2" ; then
+			echo "no such spot: '$2'."
+			exit 1
+		fi
+		main $2
+		;;
+	*)
+		spot_id=$(spots_list | grep "$1" | cut -f 1 -d ' ')
+		[ "$spot_id" ] || spot_id=$1
+		main -i $spot_id
+		;;
+	esac
+}
+
+init
+main "$@"

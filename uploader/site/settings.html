@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html manifest="windguru.manifest">
+<head>
+	<title>Windguru Settings</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<link rel="icon" href="icon.png"/>
+	<link rel="apple-touch-startup-image" href="splash.png" />
+	<link rel="stylesheet" href="settings.css" type="text/css" />
+</head>
+
+<body>
+<div onclick="location.replace('./?')">
+<ul>
+<li>Spot: 
+<script>
+	var txt = localStorage.getItem("windguru.preferred_spot");
+        txt = txt ? txt.replace(/.*name=/, "").replace(/\..*/, "") : "";
+        txt = decodeURIComponent(txt);
+	document.write(txt);
+</script>
+</li>
+<li>View: 
+<script>
+	var txt = ["Graph", "Table", "Table + Legend"];
+	var id = localStorage.getItem("windguru.preferred_view");
+	document.write(id ? txt[id] : "");
+</script>
+</li>
+<li>Network :
+<script>
+	var txt="<img src='";
+	txt += navigator.onLine ? "ok.png" : "no.png";
+	txt += "'/>";
+	document.write(txt);
+</script>
+</li>
+</div>
+</body>
+</html>

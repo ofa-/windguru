@@ -1,0 +1,1 @@
+var wgopts_1 = {"id_user":0,"wj":"kmh","tj":"c","waj":"m","odh":0,"doh":24,"wrap":80,"fhours":180,"limit1":10.63,"limit2":15.57,"limit3":19.41,"tlimit":10,"vt":1,"params":["WINDSPD","GUST","SMER","TMPE","FLHGT","CDC","APCPs","RATING"],"first_row_mwinfo":true};

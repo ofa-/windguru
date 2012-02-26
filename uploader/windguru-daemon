@@ -1,0 +1,182 @@
+#!/bin/bash
+
+function fetch_forecasts() {
+	list_spots $1 |\
+	while read l; do
+		parse_conf_line $l
+		get_spot_data $spot > "$DOCS/data/${page/.html/.data}"
+	done
+}
+
+function get_spot_data() {
+	spot=$1
+
+	base_url="http://www.windguru.cz/fr/index.php?sc=$spot"
+	options="go=1&vs=1&wj=kmh&tj=c&odh=0&doh=24&fhours=180&wrap=80"
+	curl -s "$base_url&$options" | egrep '^var wg_fcst_tab_data_1'
+}
+
+function copy_statics() {
+	tar c -P --transform 's|.*/||' "$LIST"	| tar x -C "$DOCS"
+	tar c -C "$BASE_DIR/appli/" .		| tar x -C "$DOCS"
+	make_manifest
+}
+
+function make_manifest() {
+	out="windguru.manifest"
+	echo "CACHE MANIFEST
+	# $(date +'%F %T')
+	NETWORK:
+	data/
+	*
+	FALLBACK:
+	/ void.png
+	CACHE:
+	$(cd $DOCS; ls *.*)
+	" | grep -v $out | tr -d '\t' > "$DOCS/$out"
+}
+
+function upload_dir() {
+	ls "$DOCS/$1/"*.* |\
+	while read f; do
+		curl -sT "$f" "$SITE/$1/" || echo "upload: '$f' failed"
+	done
+}
+
+function fatal() {
+	echo $1 >&2
+	return 2
+}
+
+function check_updates() {
+	set +m
+	timeout=$(( $(list_spots | wc -l) * 5 ))
+	watchdog $timeout "check update" $$ &
+
+	parse_conf_line $(list_spots | head -1)
+	ref_spot=$spot
+	ref_file=$DOCS/data/${page/.html/.data}
+	tmp_file=/tmp/$(basename $0).check
+
+	printf "Last update: "
+	stat --format=%y $ref_file 2>/dev/null || touch $ref_file
+
+	get_spot_data $ref_spot > $tmp_file || { fatal "get_spot_data"; return; }
+	curr_date=$(stat --format=%y $tmp_file)
+
+	if diff -q $tmp_file  $ref_file > /dev/null; then
+		echo "No updates @ $curr_date"
+		kill %1
+		return 1
+	else
+		printf "Updating... "
+		mv $tmp_file $ref_file
+		fetch_forecasts "|sed'1,1d'" || { fatal "fetch_forecasts"; return; }
+		echo "Update done: $curr_date"
+		kill %1
+		return 0
+	fi
+}
+
+function watchdog() {
+	sleep $1
+	echo "timeout reached ($1s), aborting $2 ($3)." >&2
+	kill -9 $3
+}
+
+function daemon() {
+	sleep_as_needed
+	set +m
+	run_task &
+	wait %1
+	case "$?" in
+		0) txt="ok" ;;
+		1) txt="no updates" ;;
+		*) txt="error" ;;
+	esac
+	cd $BASE_DIR
+	message="checked @ $(date +'%F %T') [$txt]"
+	exec bash $(basename $0) -d "$message"
+}
+
+function sleep_as_needed() {
+	show_status | grep -q "checked" && sleep $((60*60*$FREQ))
+}
+
+function run_task() {
+	cd $BASE_DIR
+	exec bash $(basename $0) -c -u "checking..."
+}
+
+function show_status() {
+	me=$(basename $0)
+	txt=$(ps -A -o pid,args | grep $me | egrep -v 'grep|-s')
+	if [ "$txt" ] ; then
+		echo "$txt"
+	else
+		echo "$me daemon no running"
+	fi
+}
+
+function init() {
+	BASE_DIR=$(dirname "$0")
+	CONF_LIB="$BASE_DIR/conf.sh"
+	source "$CONF_LIB"
+	init_conf
+	mkdir -p "$DOCS"
+	mkdir -p "$DOCS/data"
+}
+
+function usage() {
+	echo "usage: $(basename $0) <command>"
+	echo "   -d: daemon"
+	echo "   -s: status"
+	echo "   -f: fetch" 
+	echo "   -u: upload" 
+	echo "   -c: check" 
+	echo "   -k: kill daemon" 
+}
+
+function main() {
+	case $1 in
+	-d)
+		daemon > /dev/null 2>&1 &
+		;;
+	-s)
+		show_status
+		;;
+	-S)
+		copy_statics
+		;;
+	-f)
+		fetch_forecasts
+		;;
+	-u)
+		upload_dir "data"
+		;;
+	-U)
+		copy_statics
+		upload_dir ""
+		;;
+	-c)
+		check_updates || exit 1
+		;;
+	-k)
+		$0 -s | awk '{print $1}' | xargs kill -9 
+		;;
+	"")
+		usage
+		;;
+	*)
+		usage
+		exit 1
+		;;
+	esac
+}
+
+init
+while true; do
+	main $1
+	shift
+	[ "$1" ] || break
+done

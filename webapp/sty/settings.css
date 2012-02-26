@@ -1,0 +1,31 @@
+#settings {
+	vertical-align: middle;
+}
+ul {
+	display: inline-block;
+	text-align: left;
+}
+li img {
+	height: 20pt;
+	margin-bottom: -3pt;
+}
+#lang {
+	display: inline-block;
+	width: 2em;
+}
+#flag {
+	height: 17pt;
+	margin-right: .5em;
+	margin-bottom: -2pt;
+}
+#settings_button {
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	width: 1em;
+	height: 1em;
+	border: 2px solid yellow;
+	-webkit-border-radius:	.5em;
+	-moz-border-radius:	.5em;
+	text-align: center;
+}

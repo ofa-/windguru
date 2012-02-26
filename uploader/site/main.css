@@ -1,0 +1,114 @@
+/* tune windguru display */
+.wgfcst-male,
+.wgfcst-optbox,
+.wgfcst-wgtab_on,
+.wgfcst-wgtab_off,
+#forecast_options_link	{ display: none; }
+.wgfcst-link		{ text-decoration: none; color: black; }
+
+#div_forecast		{ padding:0; margin:0; }
+.wgfcst-fcsttab		{ border: none ;
+	  border-bottom: 1px solid grey;
+	  border-right: 1px solid grey; }
+.wgfcst-fcsttab,
+.wgfcst-fcsttabf	{ padding: 0; margin: 0; }
+
+#div_forecast > table > tbody {
+	display: block;
+	position: relative;
+}
+
+/* sun image and info */
+#sun_img  { height: 15px; vertical-align: middle; border: 0; }
+.info_txt { font-size: 10px; font-weight: normal; }
+
+/* no copy/paste */
+body { -webkit-user-select: none; }
+
+/* no resize while building forecast views */
+body { background: #130368; overflow:hidden; }
+
+
+/* prevent clicking, navigation buttons */
+#anti_click, #home_button, #me_default_button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+#home_button {
+	width: 52px;
+}
+#home_button:hover {
+	width: 52px;
+	opacity: .8;
+	border-right: 1px solid blue;
+	border-left : 1px solid blue;
+	border-top  : 1px solid blue;
+	background: green url('home.png') no-repeat center center;
+}
+#me_default_button {
+	height: 52px;
+}
+.not_default_spot:hover, .is_default_spot:hover {
+	height: 55px;
+	border-bottom: 1px solid blue;
+	border-left  : 1px solid blue;
+	border-top   : 1px solid blue;
+	opacity: .5;
+}
+.not_default_spot:hover, .not_default_spot:active {
+	background: green url('no.png') repeat-x 100px center;
+}
+.is_default_spot:hover, .is_default_spot:active {
+	background: green url('ok.png') repeat-x 100px center;
+}
+
+#container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0;
+	margin: 0;
+}
+
+/* center on page ... */
+#container {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+#container center {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#loading-blinder {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	display: table;
+	background-color: #130368;
+	z-index: 1;
+}
+#loading-blinder center {
+	display: table-cell;
+	vertical-align: middle;
+	color: orange;
+	font-size: 20pt;
+	font-family: Helvetica;
+}
+#loading-blinder .spinner {
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	width: 60%;
+	height: 60%;
+}
+#loading-blinder .spinner div {
+	background: #c00;
+}
+

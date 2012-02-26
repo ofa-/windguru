@@ -1,0 +1,12 @@
+# Configuration variables
+#
+# DOCS: local  dir for files
+# SITE: remote dir for uploads
+# FREQ: refresh frequency (h)
+
+DOCS="$(dirname $0)/data"
+SITE="$(cat $(dirname $0)/../.upload.site)"
+FREQ=1
+
+LIST="$(dirname $0)/site/menu.xml"
+DEPS="$(dirname $0)/deps"

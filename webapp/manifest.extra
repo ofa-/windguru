@@ -1,0 +1,33 @@
+# configured languages
+http://www.windguru.cz/img/flags/en.png
+http://www.windguru.cz/img/flags/fr.png
+http://www.windguru.cz/img/flags/cz.png
+#http://www.windguru.cz/img/flags/baq.png
+#http://www.windguru.cz/img/flags/bg.png
+#http://www.windguru.cz/img/flags/de.png
+#http://www.windguru.cz/img/flags/dk.png
+#http://www.windguru.cz/img/flags/ee.png
+#http://www.windguru.cz/img/flags/es.png
+#http://www.windguru.cz/img/flags/nl.png
+#http://www.windguru.cz/img/flags/fi.png
+#http://www.windguru.cz/img/flags/gl.png
+#http://www.windguru.cz/img/flags/hu.png
+#http://www.windguru.cz/img/flags/it.png
+#http://www.windguru.cz/img/flags/lt.png
+#http://www.windguru.cz/img/flags/lv.png
+#http://www.windguru.cz/img/flags/pl.png
+#http://www.windguru.cz/img/flags/pt.png
+#http://www.windguru.cz/img/flags/ro.png
+#http://www.windguru.cz/img/flags/ru.png
+#http://www.windguru.cz/img/flags/se.png
+
+# cache i18n data
+data.php?,en,WgLang
+data.php?,fr,WgLang
+data.php?,cz,WgLang
+
+NETWORK:
+data.php
+*
+FALLBACK:
+/ no_data.html

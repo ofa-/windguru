@@ -1,0 +1,29 @@
+body {
+	position: absolute;
+	display: table;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+}
+div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+
+	color: orange;
+	font-size: 20pt;
+	font-family: Helvetica;
+	background-color: #130368;
+}
+ul {
+	display: inline-block;
+	text-align: left;
+}
+
+li img {
+	height: 20pt;
+}
+
+/* no copy/paste */
+body { -webkit-user-select: none; }

@@ -1,0 +1,40 @@
+html {
+	display: table;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+body {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+div {
+	display: inline-block;
+	text-align: center;
+	border: 1px solid grey;
+}
+img {
+	vertical-align: middle;
+}
+a:link img, a:visited img {
+	border: 0;
+}
+a:hover img {
+	border: 2px solid blue;
+}
+a:link, a:visited {
+	text-decoration: none;
+	color: #A0A0A0;
+}
+#pub {
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	border: 0;
+	-webkit-transform: rotate(-90deg) translate(110%);
+	-moz-transform:    rotate(-90deg) translate(110%);
+	-webkit-transform-origin: 100% 100%;
+	-moz-transform-origin:    100% 100%;
+	font-family: helvetica;
+}

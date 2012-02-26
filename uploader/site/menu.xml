@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<form id="menu">
+<div>
+<input value="Grenoble"		page="grenoble.html"	spot="18666"	/>
+<input value="Bazine"		page="bazine.html"	spot="43016"	/>
+<input value="Chambéry"		page="chambery.html"	spot="46035"	/>
+<input value="Les Favres"	page="les_favres.html"	spot="319721"	/>
+</div>
+<div>
+<input value="Figon"		page="figon.html"	spot="319727"	/>
+<input value="Novalaise"	page="novalaise.html"	spot="100574"	/>
+<input value="Lardier"		page="lardier.html"	spot="323372"	/>
+<input value="Granville"	page="granville.html"	spot="13353"	/>
+</div>
+<div>
+<input value="Grenoble (long)"	page="grenoble.html"	/>
+<input value="Bazine (long)"	page="bazine.html"	/>
+<br/>
+<br/>
+<input value="Settings"		page="settings.html"	/>
+</div>
+</form>
