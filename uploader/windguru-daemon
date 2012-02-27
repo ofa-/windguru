@@ -18,7 +18,7 @@ function get_spot_data() {
 
 function copy_statics() {
 	tar c -P --transform 's|.*/||' "$LIST"	| tar x -C "$DOCS"
-	tar c -C "$BASE_DIR/appli/" .		| tar x -C "$DOCS"
+	tar c -C "$BASE_DIR/site/" .		| tar x -C "$DOCS"
 	make_manifest
 }
 
