@@ -20,12 +20,13 @@ Using the webapp
 The webapp homepage shows a menu of pre-configured spots.  The menu supports
 several layers - or screens - allowing to group spots by categories.  Specific
 individual spots can be accessed directly using the following url:
-<website>/spot.html?<spot id>|<spot name>
+``<website>/spot.html?<spot id>|<spot name>``
 
 
-The menu screen buttons bring up individual spots forecast screens.  Cliking 
-on the menu screen cycles through menu layers.  Clicking at the bottom of the
-menu screen brings up the config screen, allowing to set language preferences.
+The menu screen buttons bring up individual spots forecast screens.  Clicking 
+elsewhere on the background of the menu screen cycles through menu layers.
+Clicking at the bottom of the menu screen brings up the settings screen,
+allowing to set language preferences.
 
 Spots forecasts are shown by default using a modified version of the fabulous
 svg graph that is provided by windguru.cz.  The classic windguru tabular view
