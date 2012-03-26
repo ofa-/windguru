@@ -18,7 +18,7 @@ function main() {
 	$what = $x[0];
 	$excl = $x[1];
 	$html = file($SPOT . $OPTS);
-	$data = preg_grep(":^(var $what|<script .* src=\"$what):", $html);
+	$data = preg_grep(":(var $what|<script .* src=\"$what):", $html);
 	if ($excl)
 		$data = preg_grep(":$excl:", $data, true);
 

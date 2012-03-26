@@ -27,7 +27,7 @@ function get_spot_page() {
 }
 
 function extract_spot_data() {
-	echo "$SPOT_PAGE" | egrep '^var wg_fcst_tab_data_1'
+	echo "$SPOT_PAGE" | grep 'var wg_fcst_tab_data_1'
 }
 
 function make_spot_html() {
