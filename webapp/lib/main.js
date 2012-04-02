@@ -294,9 +294,8 @@ function get_lang() {
 	return ret;
 }
 
-function get_params() {
-	var q_spot_id = location.search.replace(/,.*/,"");
-	var spot_data = "data.php" + q_spot_id + ",int,.*data_1";
+function get_params(spot_id) {
+	var spot_data = "data.php?" + spot_id + ",int,.*data_1";
 	return {
 		data: get_var(spot_data),
 		opts: get_var("defaults/opts.js"),
@@ -309,12 +308,12 @@ function display_error(txt) {
 	_("loading-blinder").onclick = go_home;
 }
 
-function build_from_cache() {
-	var last = localStorage.getItem("windguru.last_update");
+function build_from_cache(spot_id) {
+	var last = localStorage.getItem("windguru.last_update."+spot_id);
 	if ( !last || (new Date().getTime() - last > 6*60*60*1000) )
 		return false;
 	document.getElementById("container").innerHTML =
-		 localStorage.getItem("windguru.cached_view");
+		 localStorage.getItem("windguru.cached_view."+spot_id);
 	remove("home_button");
 	remove("me_default_button");
 	remove("anti_click");
@@ -327,8 +326,8 @@ function remove(id) {
 	e.parentNode.removeChild(e);
 }
 
-function build_fresh() {
-	var params = get_params();
+function build_fresh(spot_id) {
+	var params = get_params(spot_id);
 	if (!params.data) {
 		return false;
 	}
@@ -343,13 +342,14 @@ function build_fresh() {
 }
 
 function init() {
-	if (! build_from_cache()) {
-		if (! build_fresh()) {
+	var spot_id = location.search.substr(1).replace(/,.*/,"");
+	if (! build_from_cache(spot_id)) {
+		if (! build_fresh(spot_id)) {
 			display_error("No data");
 			return;
 		}
-		localStorage.setItem("windguru.last_update", new Date().getTime());
-		localStorage.setItem("windguru.cached_view",
+		localStorage.setItem("windguru.last_update."+spot_id, new Date().getTime());
+		localStorage.setItem("windguru.cached_view."+spot_id,
 				document.getElementById("container").innerHTML);
 	}
 
