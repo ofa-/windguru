@@ -132,8 +132,7 @@ function me_default_onclick() {
 
 function update_spot_info(data) {
 	data.spot = data.spot.replace(/^[a-zA-Z]* - /, "").replace(/ \| .*$/, "");
-	data.nickname =
-		"<img id=sun_img src=img/sun.png /><a class=info_txt> " +
+	data.nickname = "<a class=info_txt> " +
 		data.sunrise + " - " + data.sunset + " " +
 		" | alt: " + data.alt + "m </a>";
 }
