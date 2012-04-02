@@ -1,3 +1,4 @@
+cd $(dirname $0)
 UPLOAD_SITE=".upload.site"
 if [ ! -f $UPLOAD_SITE ]; then
 	echo "missing upload site conf file: $UPLOAD_SITE"
