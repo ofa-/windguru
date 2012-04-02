@@ -163,21 +163,6 @@ function has_low_temp(data) {
 	return false;
 }
 
-function set_temps_display(params) {
-	var data = params.data.fcst[params.data.id_model];
-	data.RH  = null; // removes info from graphic view
-	data.SLP = [];   // removes info from graphic view
-
-	var show_iso0 = has_low_temp(data);
-	if (show_iso0) {
-		// use SLP to show iso0 in graphic view
-		// see graph_update_iso0_labels()
-		for (var i in data.FLHGT)
-			data.SLP.push(data.FLHGT[i]/100+1000);
-		params.opts.params.push("FLHGT");
-	}
-}
-
 function move_view_up_in_tree(depth) {
 	var div = _("forecast_content_div");
 	var dest = div.parentNode;
@@ -190,11 +175,23 @@ function move_view_up_in_tree(depth) {
 }
 
 function build_std_view(params) {
+	var data = params.data.fcst[params.data.id_model];
+	if (has_low_temp(data)) {
+		params.opts.params.push("FLHGT");
+	}
 	build_forecast(params, 1);
 	move_view_up_in_tree(1);
 }
 
 function build_graph_view(params) {
+	var data = params.data.fcst[params.data.id_model];
+	data.RH  = null; // removes info from graphic view
+
+	// use SLP to show iso0 in graphic views (see graph_set_iso0_labels())
+	data.SLP = [];
+	for (var i in data.FLHGT)
+		data.SLP.push(data.FLHGT[i]/100+1000);
+
 	build_forecast(params, 2);
 	var graph = move_view_up_in_tree(2);
 	graph.setAttribute("id", "graph");
@@ -202,8 +199,8 @@ function build_graph_view(params) {
 
 	var low_temps = graph.select_temp_below(0);
 	graph.set_temp_circle_colors(low_temps, "red");
-	graph.update_size();
 	graph.set_iso0_labels();
+	graph.update_size();
 }
 
 function build_forecast(params, tab) {
@@ -338,7 +335,6 @@ function build_fresh() {
 	update_params(params);
 	document.title = params.data.spot;
 	populate_container();
-	set_temps_display(params);
 	build_std_view(params);
 	build_graph_view(params);
 	compact_views();
