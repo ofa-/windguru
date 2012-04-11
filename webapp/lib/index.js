@@ -18,8 +18,7 @@ function input_load_page(e) {
 	menu.style.display = "none";
 	e.stopPropagation();
 	var spot = this.getAttribute("spot");
-	var page = spot ? "spot.html?" + spot : this.getAttribute("page");
-	window.location = page;
+	location.replace("spot.html?" + spot + "|" + this.value);
 }
 
 function get_spots_menu() {
@@ -55,8 +54,10 @@ function create_settings() {
 	var dest = document.body;
 	dest.appendChild(document.createElement("span"));
 	dest.lastChild.id = "settings_button";
-	dest.lastChild.innerHTML = "i"; // "img/settings.png";
+	dest.lastChild.innerHTML = "<span>Settings</span>";
 	dest.lastChild.onclick = show_settings;
+	dest.lastChild.ontouchstart = function () {};
+	dest.lastChild.ontouchend   = function () {};
 
 	dest.appendChild(document.createElement("div"));
 	dest.lastChild.id = "settings";
@@ -75,7 +76,6 @@ function hide_settings() {
 }
 
 function init_index() {
-console.log(location.search);
 	if (location.search) {
 	}
 	else

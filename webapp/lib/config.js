@@ -25,6 +25,8 @@ function list_languages() {
 	var ret = "";
 	for (var i in lines) {
 		var line = lines[i];
+		if (  line.match(/^#/))
+			continue;
 		if (! line.match(/flags\/[a-z]*\.png$/))
 			continue;
 		var lang = line.replace(/.*flags\//, "").replace(".png", "");

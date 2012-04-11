@@ -1,4 +1,5 @@
 #settings {
+	display: none;
 	vertical-align: middle;
 }
 ul {
@@ -8,6 +9,7 @@ ul {
 li img {
 	height: 20pt;
 	margin-bottom: -3pt;
+	margin-left: 1em;
 }
 #lang {
 	display: inline-block;
@@ -15,17 +17,35 @@ li img {
 }
 #flag {
 	height: 17pt;
-	margin-right: .5em;
 	margin-bottom: -2pt;
+}
+ul li:last-child {
+	margin-bottom: 1em; 
+}
+#settings span {
+	margin-left: .5em;
+}
+#settings div {
+	display: block;
 }
 #settings_button {
 	position: absolute;
-	right: 2px;
-	bottom: 2px;
-	width: 1em;
-	height: 1em;
-	border: 2px solid yellow;
-	-webkit-border-radius:	.5em;
-	-moz-border-radius:	.5em;
+	left: 0;
+	bottom: 0;
+	margin: 0;
+	width: 100%;
+	height: 24pt;
 	text-align: center;
+	font-size:  14pt;
+	color: #130368;
+}
+#settings_button:hover  {
+	background-color: red;
+	color: orange;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
+}
+#settings_button span {
+	display: inline-block;
+	margin-top: 4pt;
 }

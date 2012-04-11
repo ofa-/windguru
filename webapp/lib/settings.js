@@ -10,35 +10,49 @@ function create_settings_dialog(target) {
 
 	var e = document.createElement("ul");
 	target.appendChild(e);
-	e.appendChild(document.createElement("li"));
-	e.lastChild.innerHTML = txt.spot + get_preferred_spot_txt();
-	e.appendChild(document.createElement("li"));
-	e.lastChild.innerHTML = txt.view + get_preferred_view_txt();
-	e.appendChild(document.createElement("li"));
-	e.lastChild.innerHTML = txt.network + get_network_status_txt();
-	e.appendChild(document.createElement("li"));
-	e.lastChild.innerHTML = txt.language;
-	e.lastChild.appendChild(document.createElement("img"));
-	e.lastChild.lastChild.id = "flag";
-	e.lastChild.appendChild(document.createElement("span"));
-	e.lastChild.lastChild.id = "lang";
+	create_li_entry(e, txt.spot, get_preferred_spot_txt());
+	create_li_entry(e, txt.view, get_preferred_view_txt());
+	create_li_entry(e, txt.network, get_network_status_txt());
+	create_li_entry(e, txt.language, '<img id="flag"/><span id="lang"/>');
 	setup_lang_control();
-	e.appendChild(document.createElement("input"));
-	e.lastChild.type = "button";
-	e.lastChild.value = txt.config;
-	e.lastChild.onclick = function () { location.replace("config.html") };
-	e.appendChild(document.createElement("input"));
-	e.lastChild.type = "button";
-	e.lastChild.value = txt.clear;
-	e.lastChild.onclick = function () { localStorage.setItem('windguru.last_update', '') }; 
+	e.onclick = function(e) {
+		e.stopPropagation();
+	}
+	e.clear = function() {
+		this.children[0].lastChild.innerHTML = "";
+		this.children[1].lastChild.innerHTML = "";
+	}
 
-	return e;
+	var b=document.createElement("div");
+	target.appendChild(b);
+	create_button(b, txt.config, function (e) {
+		location.replace("config.html");
+		e.stopPropagation();
+	});
+	create_button(b, txt.clear, function (e) {
+		localStorage.clear();
+		this.parentNode.previousSibling.clear();
+	}); 
+}
+
+function create_li_entry(e, title, value) {
+	e.appendChild(document.createElement("li"));
+	e.lastChild.innerHTML = title;
+	e.lastChild.appendChild(document.createElement("span"));
+	e.lastChild.lastChild.innerHTML = value;
+}
+
+function create_button(e, title, onclick) {
+	e.appendChild(document.createElement("input"));
+	e.lastChild.type = "button";
+	e.lastChild.value = title;
+	e.lastChild.onclick = onclick;
 }
 
 function get_preferred_spot_txt() {
 	var txt = localStorage.getItem("windguru.preferred_spot");
-        txt = txt ? txt.replace(/.*name=/, "").replace(/\|.*/, "") : "";
-        txt = decodeURIComponent(txt);
+	txt = txt ? txt.replace(/.*\|/, "") : "";
+	txt = decodeURIComponent(txt);
 	return txt;
 }
 
@@ -56,7 +70,7 @@ function get_network_status_txt() {
 }
 
 function setup_lang_control() {
-	var langs = [ "en", "fr", "cz" ];
+	var langs = list_languages().split(", ");
 
 	function set_flag() {
 		var e = document.getElementById("lang");
@@ -89,5 +103,5 @@ function setup_lang_control() {
 	var e = document.getElementById("lang");
 	e.innerHTML = get_lang().langdir.dir;
 	set_flag();
-	e.parentNode.onclick = lang_onclick;
+	e.parentNode.parentNode.onclick = lang_onclick;
 }
