@@ -250,16 +250,6 @@ function compact_views() {
 	div.removeChild(div.lastChild);
 }
 
-var t0;
-function init0() {
-	install_loading_indicator();
-	t0 = new Date().getTime();
-}
-
-function init1() {
-	document.body.innerHTML = "load time: " + (new Date().getTime() - t0);
-}
-
 function get_var(uri, cached_value) {
 	if (navigator.onLine && !cached_value)
 	try {
@@ -362,6 +352,7 @@ function build_fresh(spot_id) {
 }
 
 function init() {
+	install_loading_indicator();
 	var spot_id = location.search.substr(1).replace(/,.*/,"");
 	if (! build_from_cache(spot_id)) {
 		if (! build_fresh(spot_id)) {
