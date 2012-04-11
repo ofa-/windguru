@@ -1,5 +1,3 @@
-// requires jquery for a few parts
-
 function _(id) {
 	return document.getElementById(id);
 }
@@ -20,20 +18,31 @@ function set_view(state) {
 	_("container").view_state = state = state % 3;
 	switch (state) {
 		case 0:
-			$("#graph").show();
-			$("#forecast").hide();
+			show("graph", true);
+			show("forecast", false);
 			break;
 		case 1:
-			$("td.wgfcst-wgt_legend").hide();
-			$("#forecast").show();
-			$("#graph").hide();
+			show_legend(false);
+			show("forecast", true);
+			show("graph", false);
 			break;
 		case 2:
-			$("td.wgfcst-wgt_legend").show();
-			$("#forecast").show();
-			$("#graph").hide();
+			show_legend(true);
+			show("forecast", true);
+			show("graph", false);
 			break;
 	}
+}
+
+function show_legend(show) {
+	var l = document.getElementsByClassName("wgfcst-wgt_legend");
+	for (var i=0; i<l.length; i++)
+		l[i].style.display = show ? "" : "none"; 
+}
+
+function show(id, show) {
+	_(id).style.display = show ? "" : "none";
+	_(id).style.visibility = show ? "visible" : "hidden";
 }
 
 function graph_set_iso0_labels() {
@@ -356,6 +365,6 @@ function init() {
 	var view = localStorage.getItem("windguru.preferred_view");
 	set_view(view ? view : 0);
 	//rescale();
-	$("body").css("overflow", "auto");
-	$("#loading-blinder").hide();
+	document.body.style.overflow = "auto";
+	_("loading-blinder").style.display = "none";
 }
