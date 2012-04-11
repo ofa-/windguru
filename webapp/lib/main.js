@@ -309,7 +309,7 @@ function get_params(spot_id) {
 	return {
 		data: get_var(spot_data),
 		opts: get_var("defaults/opts.js"),
-		lang: WgLang // global var, required by scripts.min.js
+		lang: get_lang()
 	};
 }
 
