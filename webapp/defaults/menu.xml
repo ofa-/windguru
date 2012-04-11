@@ -8,10 +8,17 @@
 <input value="Les Favres"	spot="319721"	/>
 </div>
 <div>
+<input value="Besançon"		spot="179394"	/>
 <input value="Figon"		spot="319727"	/>
 <input value="Novalaise"	spot="100574"	/>
+<input value="Le Soubon"	spot="350556"	/>
 <input value="Lardier"		spot="323372"	/>
 <input value="Granville"	spot="13353"	/>
+</div>
+<div>
+<input value="Paris"		spot="171393"	/>
+<input value="Dublin"		spot="240877"	/>
+<input value="Poprad"		spot="63770"	/>
 </div>
 <div>
 <input value="Grenoble (long)"	spot="18666,long"/>
