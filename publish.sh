@@ -1,17 +1,19 @@
 cd $(dirname $0)
 UPLOAD_SITE=".upload.site"
 if [ ! -f $UPLOAD_SITE ]; then
-	echo "missing upload site conf file: $UPLOAD_SITE"
-	echo
-	echo "echo 'ftp://<user>:<pass>@<host>/<dir>' > $UPLOAD_SITE"
-	echo "lftp \$(cat $UPLOAD_SITE) -e 'mkdir -p <dir>; exit'"
+	echo "URL='ftp://<user>:<pass>@<host>'" > $UPLOAD_SITE
+	echo "DIR=" >> $UPLOAD_SITE
+	echo "created sample upload site conf file: $UPLOAD_SITE"
+	echo "please edit and provide credentials and target dir."
 	exit 1
 fi
+. $UPLOAD_SITE
+[ -z "$URL" ] && { echo "URL not defined in $UPLOAD_SITE"; exit 1; }
+[ -z "$DIR" ] && { echo "DIR not defined in $UPLOAD_SITE"; exit 1; }
 
-LFTP_URL=$(cat $UPLOAD_SITE)
-if ! lftp $LFTP_URL -e "exit" ; then
-	echo "lftp error: destination directory does not exist, or invalid url."
-	exit 1;
+LFTP_URL=$URL/$DIR
+if ! lftp $LFTP_URL -e "exit" 2> /dev/null ; then
+	lftp $URL -e "mkdir $DIR; exit" || exit 1
 fi
 
 cd webapp
