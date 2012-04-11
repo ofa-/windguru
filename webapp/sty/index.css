@@ -16,24 +16,22 @@ body  {
 	vertical-align: middle;
 	position: relative;
 }
-#menu input {
+input {
 	display: inline;
 	font-size: 20pt;
-	background-color: #ABC;
 	margin: 3px;
+	background-color: orange;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
 }
-#status_line {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-}
-div {
+#menu div {
 	display: none;
 }
 #menu div:first-child {
 	display: block;
 }
 #loading-blinder {
+	display: none;
 	vertical-align: middle;
 }
 #loading-blinder .spinner {
@@ -45,23 +43,4 @@ div {
 }
 #loading-blinder .spinner div {
 	background: #c00;
-}
-#forecast-loader {
-	overflow: hidden;
-}
-#forecast-loader iframe {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	border: 0;
-}
-#forecast-loader div {
-	position: absolute;
-	display: block;
-	width: 42px;
-	height: 100%;
-}
-#forecast-loader div:hover {
-	background: pink;
-	opacity: .2;
 }
