@@ -163,6 +163,7 @@ function update_params(params) {
 	update_spot_info(params.data);
 	update_view_opts(params.opts);
 	params.opts.lang = params.lang;
+	params.WgFcst = load_scripts(params.lang);
 }
 
 function has_low_temp(data) {
@@ -219,7 +220,7 @@ function build_forecast(params, tab) {
 	// param 4: false => write to doc, string:"<element id>" => insert into elt
 	// opts.vt: 1 => build table view (tab 1), 2 => build graph (tab 2)
 	params.opts.vt = tab;
-	WgFcst.showForecast(params.data, params.opts, "forecast", "div_forecast");
+	params.WgFcst.showForecast(params.data, params.opts, "forecast", "div_forecast");
 }
 
 function install_loading_indicator() {
@@ -310,6 +311,16 @@ function get_params(spot_id) {
 		opts: get_var("defaults/opts.js"),
 		lang: WgLang // global var, required by scripts.min.js
 	};
+}
+
+function load_scripts(lang) {
+	var req = new XMLHttpRequest();
+	req.open("GET", "lib/scripts.min.js", false);
+	req.send(null);
+
+	var WgLang = lang;  // global required by WgUtils
+	eval(req.responseText); // defines global builder WgFcst
+	return WgFcst;
 }
 
 function display_error(txt) {
