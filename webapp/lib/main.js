@@ -227,8 +227,8 @@ function install_loading_indicator() {
 	var div = _("loading-blinder");
 	var elt = document.createElement("center");
 	var txt;
-	if (location.search.match("name="))
-		txt = decodeURIComponent(location.search).replace(/.*name=/, "");
+	if (location.search.match("|"))
+		txt = decodeURIComponent(location.search).replace(/.*\|/, "");
 	else
 		txt = "Loading";
 	elt.innerHTML = txt;
