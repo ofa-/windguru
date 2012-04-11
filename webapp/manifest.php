@@ -1,9 +1,10 @@
 <?php
   header('Content-Type: text/cache-manifest');
-  echo "CACHE MANIFEST\n";
 
   $manifest = "./manifest.php";
+  $extra    = "manifest.extra";
   $hashes   = "";
+  $files    = "";
   $mdate    = 0;
   $dir = new RecursiveDirectoryIterator(".");
   foreach(new RecursiveIteratorIterator($dir) as $file) {
@@ -13,15 +14,16 @@
 	continue;
     if ($file != $manifest)
     {
-      echo substr($file, 2) . "\n";
+      $files  .= substr($file, 2) . "\n";
       $hashes .= md5_file($file);
     }
     $mdate = max($mdate, filemtime($file)); 
   }
-  $extra = "manifest.extra";
+  $date =  date("Y-m-d H:i:s", $mdate);
+  echo "CACHE MANIFEST\n";
+  echo "# Version: $date - " . md5($hashes) . "\n";
+  echo "$files\n";
   if (file_exists($extra))
 	  echo file_get_contents($extra) . "\n";
 
-  $mdate =  date("Y-m-d H:i:s", filemtime($manifest));
-  echo "# Hash: " . md5($hashes) . " / $mdate\n";
 ?>
