@@ -19,8 +19,13 @@
 }
 
 /* sun image and info */
-#sun_img  { height: 15px; vertical-align: middle; border: 0; }
-.info_txt { font-size: 10px; font-weight: normal; }
+.info_txt {
+	font-size: 10px;
+	font-weight: normal;
+	padding-left: 20px;
+	background: transparent url('../img/sun.png') no-repeat 2px center;
+	background-size: 15px 15px;
+}
 
 /* no copy/paste */
 body { -webkit-user-select: none; }
