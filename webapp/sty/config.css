@@ -13,6 +13,7 @@ body {
 	font-family: Helvetica;
 	font-size: 20pt;
 	color: orange;
+	-webkit-user-select: none;
 }
 ul {
 	text-align: left;
