@@ -68,11 +68,13 @@ function create_settings() {
 function show_settings() {
 	document.getElementById("menu").style.display = "none";
 	document.getElementById("settings").style.display = "table-cell";
+	document.getElementById("settings_button").style.display = "none";
 }
 
 function hide_settings() {
 	document.getElementById("menu").style.display = "table-cell";
 	document.getElementById("settings").style.display = "none";
+	document.getElementById("settings_button").style.display = "";
 }
 
 function init_index() {
