@@ -318,30 +318,36 @@ function display_error(txt) {
 	_("loading-blinder").onclick = go_home;
 }
 
-function update_cache(spot_id) {
-	localStorage.setItem("windguru.last_update."+spot_id, new Date().getTime());
-	localStorage.setItem("windguru.cached_view."+spot_id, _("container").innerHTML);
+function fix_svg(node, xml_str) {
+	var good = document.adoptNode(
+			new DOMParser().parseFromString(xml_str, "text/xml")
+                        .documentElement);
+	node.parentNode.replaceChild(good, node);
+	return good;
 }
 
-function fix_svg_nodes(root) {
-	var svg = root.getElementsByTagName("svg");
-	if (!svg.length || svg[0].getAttribute("xmlns"))
-		return;
-
-	var list = [];
+function fix_svg_nodes(target) {
+	var svg = target.getElementsByTagName("svg");
+	var nodes = [];
 	for (var i=0; i<svg.length; i++)
-		list.push(svg[i]);
+		nodes.push(svg[i]);
 	var tmp = document.createElement("div");
-	for (var x, s; x=list.pop(); ) {
-		x.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-		x.setAttribute("version", "1.1");
+	for (var x; x=nodes.pop(); ) {
 		x.parentNode.replaceChild(tmp, x);
 		tmp.appendChild(x);
-		s = document.adoptNode(
-			new DOMParser().parseFromString(tmp.innerHTML, "text/xml")
-			.documentElement);
-		tmp.parentNode.replaceChild(s, tmp);
-		tmp.removeChild(tmp.firstChild);
+		x.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+		x = fix_svg(x, tmp.innerHTML);
+		tmp.parentNode.replaceChild(x, tmp);
+	}
+}
+
+function update_cache(spot_id) {
+	var html = _("container").innerHTML;
+	localStorage.setItem("windguru.last_update."+spot_id, new Date().getTime());
+	localStorage.setItem("windguru.cached_view."+spot_id, html);
+	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
+		localStorage.setItem("windguru.cached_graph."+spot_id,
+			new XMLSerializer().serializeToString(_("graph")));
 	}
 }
 
@@ -349,9 +355,13 @@ function build_from_cache(spot_id) {
 	var last = localStorage.getItem("windguru.last_update."+spot_id);
 	if ( !last || (new Date().getTime() - last > 6*60*60*1000) )
 		return false;
-	var target = _("container");
-	target.innerHTML = localStorage.getItem("windguru.cached_view."+spot_id);
-	fix_svg_nodes(target);
+	var html = localStorage.getItem("windguru.cached_view."+spot_id);
+	_("container").innerHTML = html;
+	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
+		fix_svg(_("graph"),
+			localStorage.getItem("windguru.cached_graph."+spot_id));
+		fix_svg_nodes(_("forecast"));
+	}
 	remove("home_button");
 	remove("me_default_button");
 	remove("anti_click");
@@ -360,7 +370,7 @@ function build_from_cache(spot_id) {
 }
 
 function remove(id) {
-	var e = document.getElementById(id);
+	var e = _(id);
 	e.parentNode.removeChild(e);
 }
 
