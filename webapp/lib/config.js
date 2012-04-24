@@ -12,9 +12,9 @@ function list_spots() {
 		var spot_name = spots[i].getAttribute("value");
 		if (! spot_id)
 			continue;
-		ret += spot_name + "(" + spot_id + "), ";
+		ret += spot_name + ", "; // " [" + spot_id + "], ";
 	}
-	document.write( ret.replace(/, $/, "") );
+	return ret.replace(/, $/, "");
 }
 
 function list_languages() {
@@ -33,4 +33,16 @@ function list_languages() {
 		ret += lang + ", ";
 	}
 	return ret.replace(/, $/, "");
+}
+
+function get_site() {
+	return location.hostname + location.pathname.replace(/[^\/]*$/, "");
+}
+
+function get_version() {
+	var req = new XMLHttpRequest();
+	req.open("GET", "manifest.php", false);
+	req.send(null);
+	var lines = req.responseText.split("\n");
+	return lines[1].replace(/.*Version: (.*) -.*/, "$1");
 }

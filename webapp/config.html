@@ -1,28 +1,32 @@
 <!DOCTYPE HTML>
-<html manifest="manifest.php">
+<html>
 <head>
 	<title>Windguru Config</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
 
 	<link rel="icon" href="img/icon.png"/>
-	<link rel="apple-touch-startup-image" href="img/splash.png" />
 	<link rel="stylesheet" href="sty/config.css" type="text/css" />
 	<script src="lib/config.js"></script>
 </head>
 
-<body onclick="location.replace('./?_')">
-<div>
-<ul>
-<li>Menu : <script>list_spots()</script>
-</li>
-<li>Languages : <script>document.write(list_languages())</script>
-</li>
-<li>Options :<script>list_options()</script>
-</li>
-<li>Site :<script>document.write(location.href)</script>
-</li>
-</div>
+<body>
+<table>
+<tr>
+<td>Spots</td><td><script>document.write(list_spots())</script></td>
+</tr>
+<tr>
+<td>Languages</td><td><script>document.write(list_languages())</script></td>
+</tr>
+<tr>
+<td>Options</td><td><script>list_options()</script></td>
+</tr>
+<tr>
+<td>Site</td><td><script>document.write(get_site())</script></td>
+</tr>
+<tr>
+<td>Version</td><td><script>document.write(get_version())</script></td>
+</tr>
+</table>
+<div onclick="location.replace('./?_')"></div>
 </body>
 </html>

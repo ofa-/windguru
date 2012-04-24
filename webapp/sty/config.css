@@ -1,6 +1,5 @@
 html {
 	display: table;
-	position: absolute;
 	width: 100%;
 	height: 100%;
 	text-align: center;
@@ -8,13 +7,22 @@ html {
 body {
 	display: table-cell;
 	vertical-align: middle;
+	padding: 1em;
 
 	background-color: #130368;
 	font-family: Helvetica;
 	font-size: 20pt;
 	color: orange;
-	-webkit-user-select: none;
-}
-ul {
 	text-align: left;
+}
+td {
+	padding-right: 2em;
+	vertical-align: top;
+}
+div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
