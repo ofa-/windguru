@@ -7,9 +7,12 @@
 .wgfcst-link		{ text-decoration: none; color: black; }
 
 #div_forecast		{ padding:0; margin:0; }
-.wgfcst-fcsttab		{ border: none ;
-	  border-bottom: 1px solid grey;
-	  border-right: 1px solid grey; }
+.wgfcst-fcsttab		{
+	border: none ;
+	border-bottom: 1px solid grey;
+	border-right: 1px solid grey;
+	background: #C7C7C7;
+}
 .wgfcst-fcsttab,
 .wgfcst-fcsttabf	{ padding: 0; margin: 0; }
 
