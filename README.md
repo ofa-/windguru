@@ -1,8 +1,10 @@
 OFA's Windguru
 ==============
 
-OFA's windguru is a rewrap of windguru.cz weather forecast web-site
-as an offline webapp for iPhone.
+OFA's windguru is a webapp that wraps windguru.cz weather forecast web-site
+as an offline webapp for iPhone and other mobile devices.  Individual spots
+forecasts are shown in a synthetic graph view, or as tabular data.  Layered 
+menus provide quick access to a selection of favorite spots.
 
 This project provides two flavours of the same feat:
 
@@ -28,13 +30,15 @@ elsewhere on the background of the menu screen cycles through menu layers.
 Clicking at the bottom of the menu screen brings up the settings screen,
 allowing to set language preferences.
 
-Spots forecasts are shown by default using a modified version of the fabulous
-svg graph that is provided by windguru.cz.  The classic windguru tabular view
-is available as well, with or without legend, by clicking the middle of the
-screen to cicle through views.
+Spots forecasts are shown as graphs by default.  The classic windguru tabular
+view is available as well, with or without legend, by clicking the middle of
+the screen.  Clicking again cicles through the three views.
 
-The spot forecast screen has two other active zones.  Clicking at the top of
-the screen sets the default view and spot to the current view.  Clicking at the
+The graph view is a simplified and slightly enhanced version of that of
+windguru.cz: freeze-level information is shown in blue along with temperatures,
+relative humidity and pressure information no longer appear.
+
+The spot forecast screen has another active zone: clicking at the
 left of the screen takes back to the menu screen.
 
 
@@ -42,10 +46,10 @@ Browers compat
 --------------
 
 The webapp works on most modern browsers, provided svg and local storage
-are soported.
+are supported.
 
-Android mobile-device users, please use a browser that has svg support;
-that is, use a non-default browser.
+Android mobile-device users, please use a browser that has svg support,
+for example opera-mobile; the default browser does not like svg.
 
 
 How and when forecasts are fetched
