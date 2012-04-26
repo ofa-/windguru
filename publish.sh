@@ -17,4 +17,4 @@ if ! lftp $LFTP_URL -e "exit" 2> /dev/null ; then
 fi
 
 cd webapp
-lftp $LFTP_URL -e "mirror -Rn .; exit"
+lftp $LFTP_URL -e "mirror -X *.bak -X *.orig -Rn .; exit"
