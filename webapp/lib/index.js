@@ -78,12 +78,6 @@ function hide_settings() {
 }
 
 function init_index() {
-	if (location.search) {
-	}
-	else
-	if (spot = localStorage.getItem("windguru.preferred_spot")) {
-		location.replace(spot);
-	}
 	create_menu();
 	create_loading_blinder();
 	create_settings();

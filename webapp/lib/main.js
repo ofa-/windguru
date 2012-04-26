@@ -112,31 +112,6 @@ function add_anti_click_and_buttons() {
 	elt.ontouchstart = function() {}
 	elt.ontouchend   = function() {}
 	div.appendChild(elt);
-	elt = document.createElement("div");
-	elt.setAttribute("id", "me_default_button");
-	elt.onclick = me_default_onclick;
-	elt.ontouchstart = function() {}
-	elt.ontouchend   = function() {}
-	if (localStorage.getItem("windguru.preferred_spot")
-	    === get_page_name_and_opts())
-		elt.setAttribute("class", "is_default_spot");
-	else
-		elt.setAttribute("class", "not_default_spot");
-	div.appendChild(elt);
-}
-
-function me_default_onclick() {
-	if (this.getAttribute("class") == "is_default_spot") {
-		localStorage.setItem("windguru.preferred_spot", "");
-		this.setAttribute("class", "not_default_spot");
-	}
-	else {
-		localStorage.setItem("windguru.preferred_spot",
-					get_page_name_and_opts());
-		localStorage.setItem("windguru.preferred_view",
-					_("container").view_state);
-		this.setAttribute("class", "is_default_spot");
-	}
 }
 
 function update_spot_info(data) {
@@ -363,7 +338,6 @@ function build_from_cache(spot_id) {
 		fix_svg_nodes(_("forecast"));
 	}
 	remove("home_button");
-	remove("me_default_button");
 	remove("anti_click");
 	add_anti_click_and_buttons();
 	return true;
@@ -400,8 +374,8 @@ function init() {
 		update_cache(spot_id);
 	}
 
-	var view = localStorage.getItem("windguru.preferred_view");
-	set_view(view ? view : 0);
+	var view = location.search.match(/,view=([12]),?/);
+	set_view(view ? view[1] : 0);
 	//rescale();
 	document.body.style.overflow = "auto";
 	_("loading-blinder").style.display = "none";

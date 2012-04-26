@@ -38,7 +38,7 @@ body { background: #130368; overflow:hidden; }
 
 
 /* prevent clicking, navigation buttons */
-#anti_click, #home_button, #me_default_button {
+#anti_click, #home_button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -55,22 +55,6 @@ body { background: #130368; overflow:hidden; }
 	border-left : 1px solid blue;
 	border-top  : 1px solid blue;
 	background: green url('../img/home.png') no-repeat center center;
-}
-#me_default_button {
-	height: 52px;
-}
-.not_default_spot:hover, .is_default_spot:hover {
-	height: 55px;
-	border-bottom: 1px solid blue;
-	border-left  : 1px solid blue;
-	border-top   : 1px solid blue;
-	opacity: .5;
-}
-.not_default_spot:hover, .not_default_spot:active {
-	background: green url('../img/no.png') repeat-x 100px center;
-}
-.is_default_spot:hover, .is_default_spot:active {
-	background: green url('../img/ok.png') repeat-x 100px center;
 }
 
 #container {

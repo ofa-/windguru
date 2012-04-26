@@ -1,7 +1,5 @@
 function create_settings_dialog(target) {
 	var txt = {
-		spot: "Spot :",
-		view: "View :",
 		network: "Network :",
 		language: "Language :",
 		config: "Config",
@@ -10,8 +8,6 @@ function create_settings_dialog(target) {
 
 	var e = document.createElement("ul");
 	target.appendChild(e);
-	create_li_entry(e, txt.spot, get_preferred_spot_txt());
-	create_li_entry(e, txt.view, get_preferred_view_txt());
 	create_li_entry(e, txt.network, get_network_status_txt());
 	create_li_entry(e, txt.language, '<img id="flag"/><span id="lang"/>');
 	setup_lang_control();
@@ -47,19 +43,6 @@ function create_button(e, title, onclick) {
 	e.lastChild.type = "button";
 	e.lastChild.value = title;
 	e.lastChild.onclick = onclick;
-}
-
-function get_preferred_spot_txt() {
-	var txt = localStorage.getItem("windguru.preferred_spot");
-	txt = txt ? txt.replace(/.*\|/, "") : "";
-	txt = decodeURIComponent(txt);
-	return txt;
-}
-
-function get_preferred_view_txt() {
-	var txt = ["Graph", "Table", "Table + Legend"];
-	var id = localStorage.getItem("windguru.preferred_view");
-	return (id ? txt[id] : "");
 }
 
 function get_network_status_txt() {
