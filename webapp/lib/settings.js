@@ -14,10 +14,6 @@ function create_settings_dialog(target) {
 	e.onclick = function(e) {
 		e.stopPropagation();
 	}
-	e.clear = function() {
-		this.children[0].lastChild.innerHTML = "";
-		this.children[1].lastChild.innerHTML = "";
-	}
 
 	var b=document.createElement("div");
 	target.appendChild(b);
@@ -26,8 +22,9 @@ function create_settings_dialog(target) {
 		e.stopPropagation();
 	});
 	create_button(b, txt.clear, function (e) {
+		var lang = localStorage.getItem("windguru.language");
 		localStorage.clear();
-		this.parentNode.previousSibling.clear();
+		localStorage.setItem("windguru.language", lang);
 	}); 
 }
 
