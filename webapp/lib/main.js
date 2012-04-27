@@ -92,10 +92,6 @@ function graph_set_methods() {
 	this.set_iso0_labels		= graph_set_iso0_labels;
 }
 
-function get_page_name_and_opts() {
-	return location.href.replace(/.*\//, "");
-}
-
 function go_home() {
 	location.replace("./");
 }
