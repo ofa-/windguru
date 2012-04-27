@@ -118,6 +118,7 @@ function update_spot_info(data) {
 	data.nickname = "<a class=info_txt> " +
 		data.sunrise + " - " + data.sunset + " " +
 		" | alt: " + data.alt + "m </a>";
+	data.spot.replace(" (long)", "");
 }
 
 function update_view_opts(opts) {
@@ -370,12 +371,12 @@ function init() {
 	var options = params[3];
 
 	install_loading_indicator(spot_name);
-	if (! cache_update_needed(spot_id)) {
-		build_from_cache(spot_id);
+	if (! cache_update_needed(spot_name)) {
+		build_from_cache(spot_name);
 	}
 	else {
 		build_fresh(spot_id, spot_name);
-		update_cache(spot_id);
+		update_cache(spot_name);
 	}
 	if (! _("home_button")) {
 		display_error("No data");

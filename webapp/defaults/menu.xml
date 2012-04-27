@@ -21,7 +21,7 @@
 <input value="Poprad"		spot="63770"	/>
 </div>
 <div>
-<input value="Grenoble (long)"	spot="18666,long"/>
-<input value="Bazine (long)"	spot="43016,long"/>
+<input value="Grenoble (long)"	spot="18666"/>
+<input value="Bazine (long)"	spot="43016"/>
 </div>
 </form>
