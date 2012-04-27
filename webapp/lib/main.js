@@ -97,7 +97,7 @@ function get_page_name_and_opts() {
 }
 
 function go_home() {
-	location.replace("./?_");
+	location.replace("./");
 }
 
 function add_anti_click_and_buttons() {
@@ -115,7 +115,6 @@ function add_anti_click_and_buttons() {
 }
 
 function update_spot_info(data) {
-	data.spot = data.spot.replace(/^[a-zA-Z]* - /, "").replace(/ \| .*$/, "");
 	data.nickname = "<a class=info_txt> " +
 		data.sunrise + " - " + data.sunset + " " +
 		" | alt: " + data.alt + "m </a>";
@@ -198,15 +197,11 @@ function build_forecast(params, tab) {
 	params.WgFcst.showForecast(params.data, params.opts, "forecast", "div_forecast");
 }
 
-function install_loading_indicator() {
+function install_loading_indicator(txt) {
 	var div = _("loading-blinder");
 	var elt = document.createElement("center");
-	var txt;
-	if (location.search.match("|"))
-		txt = decodeURIComponent(location.search).replace(/.*\|/, "");
-	else
-		txt = "Loading";
-	elt.innerHTML = txt;
+	document.title = txt;
+	elt.innerHTML = txt ? txt : "Loading";
 	div.appendChild(elt);
 	elt = create_spinner();
 	div.appendChild(elt);
@@ -326,10 +321,14 @@ function update_cache(spot_id) {
 	}
 }
 
-function build_from_cache(spot_id) {
+function cache_update_needed(spot_id) {
 	var last = localStorage.getItem("windguru.last_update."+spot_id);
 	if ( !last || (new Date().getTime() - last > 6*60*60*1000) )
-		return false;
+		return true;
+	return false;
+}
+
+function build_from_cache(spot_id) {
 	var html = localStorage.getItem("windguru.cached_view."+spot_id);
 	_("container").innerHTML = html;
 	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
@@ -340,7 +339,6 @@ function build_from_cache(spot_id) {
 	remove("home_button");
 	remove("anti_click");
 	add_anti_click_and_buttons();
-	return true;
 }
 
 function remove(id) {
@@ -348,33 +346,43 @@ function remove(id) {
 	e.parentNode.removeChild(e);
 }
 
-function build_fresh(spot_id) {
+function build_fresh(spot_id, spot_name) {
 	var params = get_params(spot_id);
-	if (!params.data) {
-		return false;
-	}
+	if (!params.data) return;
+
+	params.data.spot = spot_name;
 	update_params(params);
-	document.title = params.data.spot;
 	populate_container();
 	build_std_view(params);
 	build_graph_view(params);
 	compact_views();
 	add_anti_click_and_buttons();
-	return true;
 }
 
 function init() {
-	install_loading_indicator();
-	var spot_id = location.search.substr(1).replace(/,.*/,"");
-	if (! build_from_cache(spot_id)) {
-		if (! build_fresh(spot_id)) {
-			display_error("No data");
-			return;
-		}
+	var params = location.search.match(/\?([0-9]+).?([^,]*)(.*)/);
+	if (!params || !params[1]) {
+		display_error("No spot id");
+		return;
+	}
+	var spot_name = decodeURIComponent(params[2]);
+	var spot_id = params[1];
+	var options = params[3];
+
+	install_loading_indicator(spot_name);
+	if (! cache_update_needed(spot_id)) {
+		build_from_cache(spot_id);
+	}
+	else {
+		build_fresh(spot_id, spot_name);
 		update_cache(spot_id);
 	}
+	if (! _("home_button")) {
+		display_error("No data");
+		return;
+	}
 
-	var view = location.search.match(/,view=([12]),?/);
+	var view = options.match(/,view=([12]),?/);
 	set_view(view ? view[1] : 0);
 	//rescale();
 	document.body.style.overflow = "auto";
