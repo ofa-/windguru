@@ -360,7 +360,7 @@ function build_fresh(spot_id, spot_name) {
 }
 
 function init() {
-	var params = location.search.match(/\?([0-9]+).?([^,]*)(.*)/);
+	var params = location.search.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
 	if (!params || !params[1]) {
 		display_error("No spot id");
 		return;
