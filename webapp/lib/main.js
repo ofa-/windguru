@@ -114,29 +114,27 @@ function add_anti_click_and_buttons() {
 	div.appendChild(elt);
 }
 
-function update_spot_info(data) {
+function update_spot_info(data, spot_name) {
 	data.nickname = "<a class=info_txt> " +
 		data.sunrise + " - " + data.sunset + " " +
 		" | alt: " + data.alt + "m </a>";
-	data.spot.replace(" (long)", "");
+	data.spot = spot_name;
 }
 
-function update_view_opts(opts) {
+function update_view_opts(opts, long_view) {
 	opts.params = ["WINDSPD","GUST","SMER","TMPE","CDC","APCPs"];
-	if (location.search.match("long")) {
+	opts.fhours = 140;
+	opts.wrap = 40;
+	if (long_view) {
 		opts.fhours = 180;
 		opts.wrap = 80;
-	}
-	else {
-		opts.fhours = 140;
-		opts.wrap = 40;
 	}
 	opts.fhours += 3;
 }
 
-function update_params(params) {
-	update_spot_info(params.data);
-	update_view_opts(params.opts);
+function update_params(params, spot_name) {
+	update_spot_info(params.data, spot_name.replace(/ \(long\)$/, ""));
+	update_view_opts(params.opts, spot_name.match  (/ \(long\)$/));
 	params.opts.lang = params.lang;
 	params.WgFcst = load_scripts(params.lang);
 }
@@ -351,8 +349,7 @@ function build_fresh(spot_id, spot_name) {
 	var params = get_params(spot_id);
 	if (!params.data) return;
 
-	params.data.spot = spot_name;
-	update_params(params);
+	update_params(params, spot_name);
 	populate_container();
 	build_std_view(params);
 	build_graph_view(params);
