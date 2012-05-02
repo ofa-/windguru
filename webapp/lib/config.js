@@ -44,5 +44,5 @@ function get_version() {
 	req.open("GET", "manifest.php", false);
 	req.send(null);
 	var lines = req.responseText.split("\n");
-	return lines[1].replace(/.*Version: (.*) -.*/, "$1");
+	return lines[1].replace(/# Version: /, "");
 }

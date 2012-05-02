@@ -19,9 +19,11 @@
     }
     $mdate = max($mdate, filemtime($file)); 
   }
-  $date =  date("Y-m-d H:i:s", $mdate);
+  $date = date("Y-m-d H:i:s", $mdate);
+  $hash = md5($hashes);
   echo "CACHE MANIFEST\n";
-  echo "# Version: $date - " . md5($hashes) . "\n";
+  echo "# Version: $date\n";
+  echo "# Hash   : $hash\n\n";
   echo "$files\n";
   if (file_exists($extra))
 	  echo file_get_contents($extra) . "\n";
