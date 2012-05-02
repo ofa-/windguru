@@ -215,56 +215,27 @@ function compact_views() {
 	div.removeChild(div.lastChild);
 }
 
-function get_var(uri, cached_value) {
-	if (navigator.onLine && !cached_value)
+function get_var(uri) {
+	var v = null;
 	try {
 		var req = new XMLHttpRequest();
 		req.open("GET", uri, false);
 		req.send(null);
-		var c = req.responseText;
-		var v = do_eval(c);
-		v.throw_if_null;
-		localStorage.setItem("windguru."+uri, c);
-		return v;
+		eval(req.responseText.replace(/var [^=]*=/, "v="));
 	}
 	catch (e) {
 	}
-	var c = localStorage.getItem("windguru."+uri);
-	return do_eval(c);
-}
-
-function do_eval(c) {
-	var v = null;
-	try {
-		eval(c.replace(/var [^=]*=/, "v="));
-	}
-	catch (e) {}
 	return v;
 }
 
-function get_lang() {
-	var lang = localStorage.getItem("windguru.language");
-	if (!lang)
-		return get_var("defaults/lang.js");
-
-	var lang_uri = "data.php?," + lang + ",WgLang";
-	var ret = get_var(lang_uri, true);
-	if (ret)
-		return ret;
-	ret = get_var(lang_uri);
-	if (ret)
-		return ret;
-	ret = get_var("defaults/lang.js");
-	localStorage.setItem("windguru.language", "");
-	return ret;
-}
-
 function get_params(spot_id) {
+	var lang = localStorage.getItem("windguru.language");
 	var spot_data = "data.php?" + spot_id + ",int,.*data_1";
+	var lang_data = "data.php?," + (lang ? lang : "fr") + ",WgLang";
 	return {
 		data: get_var(spot_data),
 		opts: get_var("defaults/opts.js"),
-		lang: get_lang()
+		lang: get_var(lang_data)
 	};
 }
 
@@ -319,7 +290,7 @@ function update_cache(spot_id) {
 function cache_update_needed(spot_id) {
 	var last = localStorage.getItem("windguru.last_update."+spot_id);
 	if ( !last || (new Date().getTime() - last > 6*60*60*1000) )
-		return true;
+		return navigator.onLine;
 	return false;
 }
 

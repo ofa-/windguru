@@ -10,10 +10,8 @@ function create_settings_dialog(target) {
 	target.appendChild(e);
 	create_li_entry(e, txt.network, get_network_status_txt());
 	create_li_entry(e, txt.language, '<img id="flag"/><span id="lang"/>');
-	setup_lang_control();
-	e.onclick = function(e) {
-		e.stopPropagation();
-	}
+	lang_controller().setup(e.lastChild);
+	e.onclick = function (e) { e.stopPropagation(); };
 
 	var b=document.createElement("div");
 	target.appendChild(b);
@@ -22,9 +20,9 @@ function create_settings_dialog(target) {
 		e.stopPropagation();
 	});
 	create_button(b, txt.clear, function (e) {
-		var lang = localStorage.getItem("windguru.language");
 		localStorage.clear();
-		localStorage.setItem("windguru.language", lang);
+		lang_controller().init();
+		e.stopPropagation();
 	}); 
 }
 
@@ -49,39 +47,46 @@ function get_network_status_txt() {
 	return txt;
 }
 
-function setup_lang_control() {
+function lang_controller() {
 	var langs = list_languages().split(", ");
+	var disp = document.getElementById("lang");
+	var flag = document.getElementById("flag");
 
-	function set_flag() {
-		var e = document.getElementById("lang");
-		var i = document.getElementById("flag");
-		var l = e.innerHTML;
-		i.src = "http://www.windguru.cz/img/flags/"+l+".png";
+	function set_lang(lang) {
+		disp.innerHTML = lang;
+		flag.src = "http://www.windguru.cz/img/flags/" + lang + ".png";
+	}
+
+	function get_lang() {
+		return disp.innerHTML;
 	}
 	
-	function lang_onclick(event) {
-		var elt = document.getElementById("lang");
-		var lang = elt.innerHTML;
+	function next_lang(lang) {
 		var i;
 		for (i=0; i<langs.length; i++) {
 			if (lang == langs[i]) {
 				break;
 			}
 		}
-		var prev = lang;
-		lang = elt.innerHTML = langs[(i+1)%langs.length];
-		set_flag();
-		localStorage.setItem("windguru.language", lang);
-		if (! get_lang()) {
-			localStorage.setItem("windguru.language", prev);
-			elt.innerHTML = "failed !";
-			setTimeout(function () { elt.innerHTML = prev; set_flag(); }, 1000);
-		}
-		event.stopPropagation();
+		return langs[(i+1)%langs.length];
 	}
 
-	var e = document.getElementById("lang");
-	e.innerHTML = get_lang().langdir.dir;
-	set_flag();
-	e.parentNode.parentNode.onclick = lang_onclick;
+	function lang_onclick(e) {
+		var lang = next_lang(get_lang());
+		set_lang(lang);
+		localStorage.setItem("windguru.language", lang);
+		e.stopPropagation();
+	}
+
+	function init() {
+		var lang = localStorage.getItem("windguru.language");
+		set_lang(lang ? lang : next_lang());
+	}
+
+	function setup(elt) {
+		init();
+		elt.onclick = lang_onclick;
+	}
+
+	return { setup: setup, init: init, get_lang: get_lang };
 }
