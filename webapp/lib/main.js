@@ -354,12 +354,13 @@ function build_fresh(spot_id, spot_name) {
 }
 
 function init() {
-	var params = location.search.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
+	var params = decodeURIComponent(location.search)
+			.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
 	if (!params || !params[1]) {
 		display_error("No spot id");
 		return;
 	}
-	var spot_name = decodeURIComponent(params[2]);
+	var spot_name = params[2];
 	var spot_id = params[1];
 	var options = params[3];
 
