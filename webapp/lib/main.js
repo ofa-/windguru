@@ -296,6 +296,7 @@ function cache_update_needed(spot_id) {
 
 function build_from_cache(spot_id) {
 	var html = localStorage.getItem("windguru.cached_view."+spot_id);
+	if (! html) return;
 	_("container").innerHTML = html;
 	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
 		fix_svg(_("graph"),
