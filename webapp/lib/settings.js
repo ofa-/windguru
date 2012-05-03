@@ -4,6 +4,7 @@ function create_settings_dialog(target) {
 		language: "Language :",
 		config: "Config",
 		clear: "Clear",
+		search: "Search",
 	};
 
 	var e = document.createElement("ul");
@@ -22,6 +23,10 @@ function create_settings_dialog(target) {
 	create_button(b, txt.clear, function (e) {
 		localStorage.clear();
 		lang_controller().init();
+		e.stopPropagation();
+	}); 
+	create_button(b, txt.search, function (e) {
+		location.replace("http://www.windguru.cz/touch/int/search.php");
 		e.stopPropagation();
 	}); 
 }
