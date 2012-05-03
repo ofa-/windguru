@@ -21,9 +21,12 @@ function create_settings_dialog(target) {
 		e.stopPropagation();
 	});
 	create_button(b, txt.clear, function (e) {
+		var nb_cleared = Math.floor(localStorage.length/2);
 		localStorage.clear();
 		lang_controller().init();
 		e.stopPropagation();
+		e.target.value = nb_cleared;
+		setTimeout(function() { e.target.value = txt.clear; }, 1000);
 	}); 
 	create_button(b, txt.search, function (e) {
 		location.replace("http://www.windguru.cz/touch/int/search.php");
