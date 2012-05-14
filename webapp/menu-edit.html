@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+</head>
+<style>
+#contents {
+	border: 4px double lightblue;
+	margin-top: 1em;
+}
+#contents div {
+	border: 1px solid pink;
+	margin: 1px;
+	min-height: 0.5em;
+}
+#controls {
+	border: 4px double lightgreen;
+}
+#controls div {
+	display: inline-block;
+}
+#controls input {
+	display: block;
+	width: 12em;
+}
+#controls button {
+	display: block;
+	text-align: left;
+	position: relative;
+}
+#controls button img {
+	height: 1.2em;
+	margin-top: 2px;
+}
+</style>
+<script>
+function _(id) {
+	return document.getElementById(id);
+}
+
+function add_spot() {
+	var n = document.createElement("input");
+	n.setAttribute("spot_id", _("spot_id").value);
+	n.value = _("spot_name").value;
+	init_button(n);
+	_("contents").insertBefore(n, _("contents").firstChild);
+}
+
+function add_menu() {
+	var n = document.createElement("div");
+	init_menu(n);
+	_("contents").appendChild(n);
+}
+
+function save_edit() {
+	clear_input();
+}
+
+function cancel_edit() {
+}
+
+function clear_input() {
+	_("spot_id")	.value = "";
+	_("spot_name")	.value = "";
+}
+
+
+
+
+function delete_mode() {
+	if (!curr_butt)
+		return;
+	curr_butt.onmouseup = function (e) {
+		e.target.parentNode.removeChild(e.target);
+		curr_butt = null;
+	}
+	curr_butt.style.background = "red";
+}
+
+function cancel_delete() {
+	if (del_timer) {
+		clearTimeout(del_timer);
+		del_timer = null;
+	}
+	if (curr_butt) {
+		curr_butt.onmouseup = null;
+		curr_butt.style.background = "lightgreen";
+	}
+}
+
+var del_timer;
+var curr_butt;
+function butt_mouse_down(e) {
+	cancel_delete();
+	curr_butt = e.target;
+	del_timer = setTimeout(delete_mode, 1000);
+	curr_butt.style.background = "lightgreen";
+}
+
+function butt_click(e) {
+	_("spot_id").value = e.target.getAttribute("spot_id");
+	_("spot_name").value = e.target.value;
+}
+
+function butt_mouse_over(e) {
+	cancel_delete();
+	e.stopPropagation();
+	if (!curr_butt || e.target == curr_butt)
+		return;
+	if (e.target == e.target.parentNode.lastChild) {
+		e.target.parentNode.appendChild(curr_butt);
+	}
+	else
+	if (e.target == curr_butt.nextSibling) {
+		e.target.parentNode.insertBefore(e.target, curr_butt);
+	}
+	else {
+		e.target.parentNode.insertBefore(curr_butt, e.target);
+	}
+}
+
+function butt_touch_start(e) {
+	if (curr_butt)
+		butt_mouse_over(e);
+	else
+		butt_mouse_down(e);
+}
+
+function menu_mouse_over(e) {
+	cancel_delete();
+	if (curr_butt)
+		e.target.appendChild(curr_butt);	
+}
+
+function init_button(butt) {
+	butt.onmousedown = butt_mouse_down;
+	butt.onmouseover = butt_mouse_over;
+	butt.onclick = butt_click;
+	butt.type = "button";
+	butt.ontouchstart = butt_touch_start;
+	butt.ontouchend = function() {};
+}
+
+function init_menu(menu) {
+	menu.onmouseover = menu_mouse_over;
+	menu.ontouchstart = menu_mouse_over;
+	for (var i,n=menu.firstChild; n; n=i) {
+		i = n.nextSibling;
+		if (n.nodeType == Node.TEXT_NODE) {
+			n.parentNode.removeChild(n);
+		}
+	}
+}
+
+function init_content_panel() {
+	var contents = _("contents");
+	var spots = contents.getElementsByTagName("input");
+	for (var i=0; i < spots.length; i++) {
+		init_button(spots[i]);
+	}
+	var menus = contents.getElementsByTagName("div");
+	for (var i=0; i < menus.length; i++) {
+		init_menu(menus[i]);
+	}
+	contents.onmouseup = function () {
+		if (!curr_butt) return;
+		curr_butt.style.background = "";
+		curr_butt = null;
+	}
+}
+
+onload = init_content_panel;
+</script>
+
+<div id="controls">
+<div>
+<input id="spot_name" type="text" title="Spot Name" placeholder="Spot Name"/>
+<input id="spot_id"   type="text" title="Spot ID"   placeholder="Spot ID"/>
+</div>
+<div>
+<button onclick="add_spot()">+ spot</button>
+<button onclick="add_menu()">+ menu</button>
+</div>
+<div>
+<button onclick="save_edit()"><img src="img/ok.png"/></button>
+<button onclick="cancel_edit()"><img src="img/no.png"/></button>
+</div>
+</div>
+<div id="contents">
+<div>
+<input value="spot 1" spot_id="1" />
+<input value="spot 2" spot_id="2" />
+<input value="spot 3" spot_id="3" />
+</div>
+<div>
+<input value="spot 4" spot_id="4" />
+<input value="spot 5" spot_id="5" />
+</div>
+</div>
+</html>
