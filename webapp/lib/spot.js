@@ -333,8 +333,8 @@ function build_fresh(spot_id, spot_name) {
 function init() {
 	var params = decodeURIComponent(location.search)
 			.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
-	if (!params || !params[1]) {
-		display_error("No spot id");
+	if (!params || !params[1] || !params[2]) {
+		display_error("Bad spot spec.  Use &lt;id>:<name&gt;");
 		return;
 	}
 	var spot_name = params[2];
@@ -351,6 +351,7 @@ function init() {
 	}
 	if (! _("home_button")) {
 		display_error("No data");
+		localStorage.setItem("windguru.last_update."+spot_id, null);
 		return;
 	}
 
