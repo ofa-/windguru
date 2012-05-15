@@ -183,11 +183,15 @@ function build_graph_view(params) {
 }
 
 function build_forecast(params, tab) {
-	// WgFcst.showForecast(data, opts, <param 3>, <param 4>);
-	// returns: data (first param)
-	// param 3: index given to forecats object in global var "forecasts"
-	// param 4: false => write to doc, string:"<element id>" => insert into elt
-	// opts.vt: 1 => build table view (tab 1), 2 => build graph (tab 2)
+	/* 
+	   WgFcst.showForecast(data, opts, <param 3>, <param 4>)
+	   returns: data (first param)
+	   param 3: index given to forecats object in global var "forecasts"
+	   param 4: false                  => write to doc,
+	            string:"<element id>"  => insert into elt
+	   opts.vt: 1 => build table view (tab 1),
+	            2 => build graph (tab 2)
+	*/
 	params.opts.vt = tab;
 	params.WgFcst.showForecast(params.data, params.opts, "forecast", "div_forecast");
 }
@@ -279,7 +283,8 @@ function fix_svg_nodes(target) {
 
 function update_cache(spot_id) {
 	var html = _("container").innerHTML;
-	localStorage.setItem("windguru.last_update."+spot_id, new Date().getTime());
+	localStorage.setItem("windguru.last_update."+spot_id,
+				 new Date().getTime());
 	localStorage.setItem("windguru.cached_view."+spot_id, html);
 	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
 		localStorage.setItem("windguru.cached_graph."+spot_id,
