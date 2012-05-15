@@ -258,6 +258,12 @@ function display_error(txt) {
 	_("loading-blinder").onclick = go_home;
 }
 
+function has_inline_svg() {
+	var tmp = document.createElement("div");
+	tmp.innerHTML = "<svg></svg>";
+	return tmp.firstChild.namespaceURI.match("svg");
+}
+
 function fix_svg(node, xml_str) {
 	var good = document.adoptNode(
 			new DOMParser().parseFromString(xml_str, "text/xml")
@@ -286,7 +292,7 @@ function update_cache(spot_id) {
 	localStorage.setItem("windguru.last_update."+spot_id,
 				 new Date().getTime());
 	localStorage.setItem("windguru.cached_view."+spot_id, html);
-	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
+	if (!has_inline_svg()) {
 		localStorage.setItem("windguru.cached_graph."+spot_id,
 			new XMLSerializer().serializeToString(_("graph")));
 	}
@@ -307,7 +313,7 @@ function build_from_cache(spot_id) {
 	var html = localStorage.getItem("windguru.cached_view."+spot_id);
 	if (! html) return;
 	_("container").innerHTML = html;
-	if (navigator.userAgent.match(/Firefox\/[3-9]\./)) {
+	if (!has_inline_svg()) {
 		fix_svg(_("graph"),
 			localStorage.getItem("windguru.cached_graph."+spot_id));
 		fix_svg_nodes(_("forecast"));
