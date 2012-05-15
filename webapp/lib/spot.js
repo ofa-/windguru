@@ -337,12 +337,12 @@ function init() {
 	var options = params[3];
 
 	install_loading_indicator(spot_name);
-	if (! cache_update_needed(spot_name)) {
-		build_from_cache(spot_name);
-	}
-	else {
+	if (cache_update_needed(spot_name)) {
 		build_fresh(spot_id, spot_name);
 		update_cache(spot_name);
+	}
+	else {
+		build_from_cache(spot_name);
 	}
 	if (! _("home_button")) {
 		display_error("No data");
