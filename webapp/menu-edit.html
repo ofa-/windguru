@@ -17,21 +17,35 @@
 #controls {
 	border: 4px double lightgreen;
 }
-#controls div {
-	display: inline-block;
-}
-#controls input {
-	display: block;
-	width: 12em;
-}
 #controls button {
-	display: block;
-	text-align: left;
-	position: relative;
+	vertical-align: middle;
 }
 #controls button img {
 	height: 1.2em;
 	margin-top: 2px;
+}
+#spot_input {
+	display: none;
+	background: #130368;
+}
+#spot_input center {
+	border: 4px double grey;
+	background: #A0A0A0;
+	vertical-align: middle;
+}
+#spot_input input {
+	display: block;
+	width: 12em;
+}
+html {
+	display: table;
+	margin: auto;
+	height:100%;
+	background: #130368;
+}
+body {
+	display: table-cell;
+	vertical-align: middle;
 }
 </style>
 <script>
@@ -40,13 +54,9 @@ function _(id) {
 }
 
 function add_spot() {
-	if (!_("spot_name").value || !_("spot_id").value)
-		return;
-	var n = document.createElement("input");
-	n.setAttribute("spot_id", _("spot_id").value);
-	n.value = _("spot_name").value;
-	init_button(n);
-	_("contents").insertBefore(n, _("contents").firstChild);
+	_("spot_input").style.display = "block";
+	_("controls").style.display = "none";
+	_("contents").style.display = "none";
 }
 
 function add_menu() {
@@ -55,12 +65,37 @@ function add_menu() {
 	_("contents").appendChild(n);
 }
 
-function save_edit() {
+function save_spot() {
+	if (!_("spot_name").value || !_("spot_id").value)
+		return;
 	if (curr_butt)
 		update_butt(curr_butt);
 	else
-		save_menu();
+		create_new_spot();
+	exit_edit();
+}
+
+function exit_edit() {
+	_("spot_input").style.display = "";
+	_("controls").style.display = "";
+	_("contents").style.display = "";
 	clear_curr();
+}
+	
+function create_new_spot() {
+	var n = document.createElement("input");
+	n.setAttribute("spot_id", _("spot_id").value);
+	n.value = _("spot_name").value;
+	init_button(n);
+	var dest = _("contents").lastChild;
+	dest.appendChild(n);
+	n.focus();
+}
+
+function save_config() {
+	save_menu();
+	clear_curr();
+	quit_menu_edit();
 }
 
 function save_menu() {
@@ -69,16 +104,19 @@ function save_menu() {
 	localStorage.setItem("windguru.menu", contents.innerHTML);
 }
 
-function exit_edit() {
+function quit_menu_edit() {
 	location.replace("./");
 }
 
-function cancel_edit() {
-	if (curr_butt)
+function del_or_quit() {
+	if (curr_butt) {
 		delete_butt(curr_butt);
-	else
-		exit_edit();
-	clear_curr();
+		clear_curr();
+	}
+	else {
+		clear_curr();
+		quit_menu_edit();
+	}
 }
 
 function clear_input() {
@@ -173,6 +211,8 @@ function remove_empty_menus(contents) {
 function init_content_panel() {
 	var contents = _("contents");
 	contents.innerHTML = localStorage.getItem("windguru.menu");
+	if (!contents.innerHTML) contents.innerHTML = "<div></div>";
+
 	var spots = contents.getElementsByTagName("input");
 	for (var i=0; i < spots.length; i++) {
 		init_button(spots[i]);
@@ -186,20 +226,24 @@ function init_content_panel() {
 onload = init_content_panel;
 </script>
 
+<body>
 <div id="controls">
-<div>
-<input id="spot_name" type="text" title="Spot Name" placeholder="Spot Name"/>
-<input id="spot_id"   type="text" title="Spot ID"   placeholder="Spot ID"/>
-</div>
-<div>
+<center>
 <button onclick="add_spot()">+ spot</button>
 <button onclick="add_menu()">+ menu</button>
+<button onclick="save_config()"><img src="img/ok.png"/></button>
+<button onclick="del_or_quit()"><img src="img/no.png"/></button>
+</center>
 </div>
-<div>
-<button onclick="save_edit()"><img src="img/ok.png"/></button>
-<button onclick="cancel_edit()"><img src="img/no.png"/></button>
-</div>
+<div id="spot_input">
+<center>
+<input id="spot_name" type="text" title="Spot Name" placeholder="Spot Name"/>
+<input id="spot_id"   type="text" title="Spot ID"   placeholder="Spot ID"/>
+<button onclick="save_spot()"><img src="img/ok.png"/></button>
+<button onclick="exit_edit()"><img src="img/no.png"/></button>
+</center>
 </div>
 <div id="contents">
 </div>
+</body>
 </html>
