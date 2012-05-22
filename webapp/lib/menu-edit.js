@@ -98,6 +98,7 @@ function set_curr(butt) {
 	clear_curr();
 	curr_butt = butt;
 	butt.style.background = "lightgreen";
+	butt.dbl_click = setTimeout(function() { butt.dbl_click = null }, 500);
 	_("spot_id").value = butt.getAttribute("spot_id");
 	_("spot_name").value = butt.value;
 }
@@ -105,15 +106,19 @@ function set_curr(butt) {
 var curr_butt;
 
 function butt_click(e) {
-	if (e.target == curr_butt) {
-		clear_curr();
+	var butt = e.target;
+	if (butt == curr_butt) {
+		if (butt.dbl_click)
+			add_spot();
+		else
+			clear_curr();
 	}
 	else
 	if (curr_butt) {
-		move_curr_butt(e.target);
+		move_curr_butt(butt);
 	}
 	else {
-		set_curr(e.target);
+		set_curr(butt);
 	}
 	e.stopPropagation();
 }
