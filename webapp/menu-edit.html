@@ -6,23 +6,32 @@
 </head>
 <style>
 #contents {
-	border: 4px double lightblue;
 	margin-top: 1em;
 }
 #contents div {
 	border: 1px solid pink;
-	margin: 1px;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
+	margin: 2px;
 	min-height: 0.5em;
+	padding: 3px 4px;
+	width: 20em;
+}
+#contents input {
+	margin: 2px;
 }
 #controls {
-	border: 4px double lightgreen;
 }
 #controls button {
 	vertical-align: middle;
+	background: orange;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
+	font-size: 20pt;
 }
 #controls button img {
 	height: 1.2em;
-	margin-top: 2px;
+	margin-bottom: -7px;
 }
 #spot_input {
 	display: none;
@@ -93,8 +102,8 @@ function create_new_spot() {
 }
 
 function save_config() {
-	save_menu();
 	clear_curr();
+	save_menu();
 	quit_menu_edit();
 }
 
@@ -105,6 +114,7 @@ function save_menu() {
 }
 
 function quit_menu_edit() {
+	clear_curr();
 	location.replace("./");
 }
 
@@ -132,7 +142,9 @@ function update_butt(butt) {
 }
 
 function delete_butt(butt) {
+	animate_width(butt, function () {
 	butt.parentNode.removeChild(butt);
+	});
 }
 
 function clear_curr() {
@@ -155,11 +167,10 @@ var curr_butt;
 function butt_click(e) {
 	if (e.target == curr_butt) {
 		clear_curr();
-		return;
 	}
+	else
 	if (curr_butt) {
-		butt_mouse_over(e);
-		clear_curr();
+		move_curr_butt(e.target);
 	}
 	else {
 		set_curr(e.target);
@@ -167,20 +178,32 @@ function butt_click(e) {
 	e.stopPropagation();
 }
 
-function butt_mouse_over(e) {
-	if (e.target == curr_butt.nextSibling) {
-		e.target.parentNode.insertBefore(e.target, curr_butt);
-	}
-	else {
-		e.target.parentNode.insertBefore(curr_butt, e.target);
-	}
-	e.target.blur();
+function move_curr_butt(dest) {
+	var butt = curr_butt;
+	if (!butt) return;
+	dest.blur();
+	animate_width(butt, function () {
+	swap_butts(butt, dest);
+	animate_width(butt, function () {
+	clear_curr();
+	})});
+}
+
+function swap_butts(butt, dest) {
+	if (dest == butt.nextSibling)
+		dest.parentNode.insertBefore(dest, butt);
+	else
+		dest.parentNode.insertBefore(butt, dest);
 }
 
 function menu_click(e) {
-	if (curr_butt)
-		e.target.appendChild(curr_butt);
+	var butt = curr_butt;
+	if (!butt) return;
+	animate_width(butt, function () {
+	e.target.appendChild(butt);
+	animate_width(butt, function () {
 	clear_curr();
+	})});
 }
 
 function init_button(butt) {
@@ -197,6 +220,36 @@ function init_menu(menu) {
 		}
 	}
 }
+
+function animate_width(butt, post_animation_func) {
+	if (!butt.original_width) {
+		butt.original_width = parseInt(
+			document.defaultView.getComputedStyle(butt, "")
+			.getPropertyValue("width"));
+		xxflate_butt(butt, 100, 5, post_animation_func);
+	}
+	else {
+		xxflate_butt(butt, 0, 100, post_animation_func);
+	}
+}
+
+function xxflate_butt(butt, from, dest, post_animation_func) {
+	butt.style.width = butt.original_width*from/100 + "px";
+	if (from == dest) {
+		if (dest == 100) {
+			butt.original_width = null;
+			butt.style.width = "";
+		}
+		post_animation_func();
+	}
+	else {
+		var inc = from > dest ? from - 5 : from + 5;
+		setTimeout(function () {
+			xxflate_butt(butt, inc, dest, post_animation_func)
+		}, 10);
+	}
+}
+
 
 function remove_empty_menus(contents) {
 	var l = contents.getElementsByTagName("div");
@@ -229,8 +282,8 @@ onload = init_content_panel;
 <body>
 <div id="controls">
 <center>
-<button onclick="add_spot()">+ spot</button>
-<button onclick="add_menu()">+ menu</button>
+<button onclick="add_spot()">Spot</button>
+<button onclick="add_menu()">Menu</button>
 <button onclick="save_config()"><img src="img/ok.png"/></button>
 <button onclick="del_or_quit()"><img src="img/no.png"/></button>
 </center>
