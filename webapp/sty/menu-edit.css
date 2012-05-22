@@ -1,0 +1,51 @@
+#contents {
+	margin-top: 1em;
+}
+#contents div {
+	border: 1px solid pink;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
+	margin: 2px;
+	min-height: 0.5em;
+	padding: 3px 4px;
+	width: 20em;
+}
+#contents input {
+	margin: 2px;
+}
+#controls {
+}
+#controls button {
+	vertical-align: middle;
+	background: orange;
+	-webkit-border-radius:  9pt;
+	-moz-border-radius: 9pt;
+	font-size: 20pt;
+}
+#controls button img {
+	height: 1.2em;
+	margin-bottom: -7px;
+}
+#spot_input {
+	display: none;
+	background: #130368;
+}
+#spot_input center {
+	border: 4px double grey;
+	background: #A0A0A0;
+	vertical-align: middle;
+}
+#spot_input input {
+	display: block;
+	width: 12em;
+}
+html {
+	display: table;
+	margin: auto;
+	height:100%;
+	background: #130368;
+}
+body {
+	display: table-cell;
+	vertical-align: middle;
+}
