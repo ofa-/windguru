@@ -22,10 +22,15 @@ function input_load_page(e) {
 }
 
 function get_spots_menu() {
+	var menu = localStorage.getItem("windguru.menu");
+	if (menu) return menu;
+
 	var req = new XMLHttpRequest();
 	req.open("GET", "defaults/menu.xml", false);
 	req.send(null);
-	return req.responseText;
+	menu = req.responseText;
+	localStorage.setItem("windguru.menu", menu);
+	return menu;
 }
 
 function create_menu() {
