@@ -82,6 +82,7 @@ function update_butt(butt) {
 }
 
 function delete_butt(butt) {
+	if (!butt || butt.is_animating) return;
 	animate_width(butt, function () {
 	butt.parentNode.removeChild(butt);
 	});
@@ -125,7 +126,7 @@ function butt_click(e) {
 
 function move_curr_butt(dest) {
 	var butt = curr_butt;
-	if (!butt) return;
+	if (!butt || butt.is_animating) return;
 	dest.blur();
 	animate_width(butt, function () {
 	swap_butts(butt, dest);
@@ -143,7 +144,7 @@ function swap_butts(butt, dest) {
 
 function menu_click(e) {
 	var butt = curr_butt;
-	if (!butt) return;
+	if (!butt || butt.is_animating) return;
 	animate_width(butt, function () {
 	e.target.appendChild(butt);
 	animate_width(butt, function () {
@@ -167,6 +168,7 @@ function init_menu(menu) {
 }
 
 function animate_width(butt, post_animation_func) {
+	butt.is_animating = true;
 	if (!butt.original_width) {
 		butt.original_width = parseInt(
 			document.defaultView.getComputedStyle(butt, "")
@@ -185,6 +187,7 @@ function xxflate_butt(butt, from, dest, post_animation_func) {
 			butt.original_width = null;
 			butt.style.width = "";
 		}
+		butt.is_animating = false;
 		post_animation_func();
 	}
 	else {
