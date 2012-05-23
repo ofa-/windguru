@@ -1,17 +1,18 @@
 function list_languages() {
 	var langs_key = "windguru.languages";
-	var langs = localStorage.getItem(langs_key);
-	if (langs) return langs;
+	var languages = localStorage.getItem(langs_key);
+	if (languages) return languages;
 
-	langs = get_fresh_list_languages();
-	localStorage.setItem(langs_key, langs);
-	return langs;
+	languages = get_fresh_list_languages();
+	localStorage.setItem(langs_key, languages);
+	return languages;
 }
 
 function get_fresh_list_languages() {
 	var req = new XMLHttpRequest();
 	req.open("GET", "manifest.extra", false);
 	req.send(null);
+
 	var lines = req.responseText.split("\n");
 	var ret = "";
 	for (var i in lines) {
@@ -44,6 +45,7 @@ function get_fresh_version() {
 	var req = new XMLHttpRequest();
 	req.open("GET", "manifest.php", false);
 	req.send(null);
+
 	var lines = req.responseText.split("\n");
 	return lines[1].replace(/# Version: /, "");
 }
