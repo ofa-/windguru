@@ -3,6 +3,7 @@
 <head>
 	<title>Windguru Config</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
 
 	<link rel="icon" href="img/icon.png"/>
 	<link rel="stylesheet" href="sty/config.css" type="text/css" />
@@ -11,23 +12,13 @@
 
 <body onload="init_config()">
 <table>
-<tr>
-<td>Site</td><td><script>document.write(get_site())</script></td>
-</tr>
-<tr>
-<td>Version</td><td><script>document.write(get_version())</script></td>
-</tr>
-<tr>
-<td>Languages</td><td><script>document.write(list_languages())</script></td>
-</tr>
-<tr>
-<td></td><td>
-<input type="button" value="Clear"
-	onclick="clear_local_storage(); event.stopPropagation();"/>
-<input type="button" value="Update"
-	onclick="update_app(); event.stopPropagation();"/>
-</td>
-</tr>
+<tr><td>Site</td><td><script>document.write(get_site())</script></td></tr>
+<tr><td>Version</td><td><script>document.write(get_version())</script></td></tr>
+<tr><td>Languages</td><td><script>document.write(list_languages())</script></td></tr>
 </table>
+<center>
+<input type="button" value="Clear" onclick="clear_local_storage()"/>
+<input type="button" value="Update" onclick="update_app()"/>
+</center>
 </body>
 </html>

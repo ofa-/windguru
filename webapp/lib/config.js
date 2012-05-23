@@ -1,4 +1,14 @@
 function list_languages() {
+	var langs_key = "windguru.languages";
+	var langs = localStorage.getItem(langs_key);
+	if (langs) return langs;
+
+	langs = get_fresh_list_languages();
+	localStorage.setItem(langs_key, langs);
+	return langs;
+}
+
+function get_fresh_list_languages() {
 	var req = new XMLHttpRequest();
 	req.open("GET", "manifest.extra", false);
 	req.send(null);
@@ -21,6 +31,16 @@ function get_site() {
 }
 
 function get_version() {
+	var ver_key = "windguru.version";
+	var version = localStorage.getItem(ver_key);
+	if (version) return version;
+
+	version = get_fresh_version();
+	localStorage.setItem(ver_key, version);
+	return version;
+}
+
+function get_fresh_version() {
 	var req = new XMLHttpRequest();
 	req.open("GET", "manifest.php", false);
 	req.send(null);
@@ -29,7 +49,14 @@ function get_version() {
 }
 
 function init_config() {
-	document.body.onclick = function() { location.replace("./") };
+	var d = document.createElement("div");
+	d.onclick = function() { location.replace("./") };
+	var s = d.style;
+	s.position = "absolute";
+	s.top = s.left = "0";
+	s.width = s.height = "100%";
+	s.zIndex = "-1";
+	document.body.appendChild(d);
 }
 
 function clear_local_storage() {
