@@ -17,11 +17,14 @@ function add_menu() {
 function save_spot() {
 	if (!_("spot_name").value || !_("spot_id").value)
 		return;
-	if (curr_butt)
+	if (curr_butt) {
 		update_butt(curr_butt);
-	else
+		exit_edit();
+	}
+	else {
+		exit_edit();
 		create_new_spot();
-	exit_edit();
+	}
 }
 
 function exit_edit() {
@@ -35,9 +38,12 @@ function create_new_spot() {
 	var n = document.createElement("input");
 	init_button(n);
 	update_butt(n);
-	var dest = _("contents").lastChild;
-	dest.appendChild(n);
-	n.focus();
+	_("contents").lastChild.appendChild(n);
+	set_curr(n);
+	animate_width(n, function () {
+	animate_width(n, function () {
+	clear_curr();
+	})});
 }
 
 function save_config() {
