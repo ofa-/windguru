@@ -1,21 +1,3 @@
-html {
-	display: table;
-	height: 100%;
-	margin-left: auto;
-	margin-right: auto;
-}
-body {
-	display: table-cell;
-	vertical-align: middle;
-	background-color: #130368;
-	font-family: Helvetica;
-	font-size: 20pt;
-	color: orange;
-}
-input[type="button"] {
-	font-size: 20pt;
-	background: orange;
-}
 #config {
 	font-size: 15pt;
 }

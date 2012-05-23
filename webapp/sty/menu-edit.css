@@ -1,21 +1,8 @@
-html {
-	display: table;
-	margin: auto;
-	height:100%;
-	background: #130368;
-	font-family: Helvetica;
-	font-size: 20pt;
-}
-body {
-	display: table-cell;
-	vertical-align: middle;
-}
-#contents div, #controls button, #contents input {
+#contents div {
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
-	font-size: 20pt;
 }
-#contents {
+#contents div:first-child {
 	margin-top: 1em;
 }
 #contents div {
@@ -28,12 +15,6 @@ body {
 #contents input {
 	margin: 2px;
 	background: #ECCC66;
-}
-#controls {
-}
-#controls button {
-	vertical-align: middle;
-	background: orange;
 }
 #controls button img {
 	height: 1.2em;
@@ -53,6 +34,6 @@ body {
 	font-size: 20pt;
 }
 #spot_input button {
-	width: auto;
-	height: auto;
+	width: 70px;
+	height: 60px;
 }
