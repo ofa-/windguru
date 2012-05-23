@@ -33,9 +33,8 @@ function exit_edit() {
 	
 function create_new_spot() {
 	var n = document.createElement("input");
-	n.setAttribute("spot_id", _("spot_id").value);
-	n.value = _("spot_name").value;
 	init_button(n);
+	update_butt(n);
 	var dest = _("contents").lastChild;
 	dest.appendChild(n);
 	n.focus();
@@ -78,7 +77,7 @@ function update_butt(butt) {
 	if (!_("spot_name").value || !_("spot_id").value)
 		return;
 	butt.setAttribute("value",   _("spot_name").value);
-	butt.setAttribute("spot_id", _("spot_id").value);
+	butt.setAttribute("spot",    _("spot_id").value);
 }
 
 function delete_butt(butt) {
@@ -100,7 +99,7 @@ function set_curr(butt) {
 	curr_butt = butt;
 	butt.style.background = "lightgreen";
 	butt.dbl_click = setTimeout(function() { butt.dbl_click = null }, 500);
-	_("spot_id").value = butt.getAttribute("spot_id");
+	_("spot_id").value = butt.getAttribute("spot");
 	_("spot_name").value = butt.value;
 }
 
