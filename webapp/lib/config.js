@@ -46,3 +46,26 @@ function get_version() {
 	var lines = req.responseText.split("\n");
 	return lines[1].replace(/# Version: /, "");
 }
+
+function init_config() {
+	document.body.onclick = function() { location.replace("./") };
+}
+
+function clear_local_storage() {
+	if (localStorage.length > 1) {
+		var menu_key = "windguru.menu";
+		var menu_sav = localStorage.getItem(menu_key);
+		localStorage.clear();
+		localStorage.setItem(menu_key, menu_sav);
+	}
+	else {
+		if (confirm("Spots already cleared.\nReset menu ?")) {
+			localStorage.clear();
+			location.reload();
+		}
+	}
+}
+
+function update_app() {
+	applicationCache.update();
+}

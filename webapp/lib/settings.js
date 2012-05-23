@@ -3,7 +3,6 @@ function create_settings_dialog(target) {
 		network: "Network :",
 		language: "Language :",
 		config: "Config",
-		clear: "Clear",
 		search: "Search",
 		spots: "Spots",
 	};
@@ -21,11 +20,6 @@ function create_settings_dialog(target) {
 		location.replace("config.html");
 		e.stopPropagation();
 	});
-	create_button(b, txt.clear, function (e) {
-		clear_local_storage();
-		lang_controller().init();
-		e.stopPropagation();
-	}); 
 	create_button(b, txt.search, function (e) {
 		location.replace("http://www.windguru.cz/touch/int/search.php");
 		e.stopPropagation();
@@ -55,21 +49,6 @@ function get_network_status_txt() {
 	txt += navigator.onLine ? "ok.png" : "no.png";
 	txt += "'/>";
 	return txt;
-}
-
-function clear_local_storage() {
-	if (localStorage.length > 1) {
-		var menu_key = "windguru.menu";
-		var menu_sav = localStorage.getItem(menu_key);
-		localStorage.clear();
-		localStorage.setItem(menu_key, menu_sav);
-	}
-	else {
-		if (confirm("Spots already cleared. Reset menu ?")) {
-			localStorage.clear();
-			location.reload();
-		}
-	}
 }
 
 function lang_controller() {

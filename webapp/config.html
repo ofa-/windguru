@@ -9,24 +9,25 @@
 	<script src="lib/config.js"></script>
 </head>
 
-<body>
+<body onload="init_config()">
 <table>
-<tr>
-<td>Spots</td><td><script>document.write(list_spots())</script></td>
-</tr>
-<tr>
-<td>Languages</td><td><script>document.write(list_languages())</script></td>
-</tr>
-<tr>
-<td>Options</td><td><script>list_options()</script></td>
-</tr>
 <tr>
 <td>Site</td><td><script>document.write(get_site())</script></td>
 </tr>
 <tr>
 <td>Version</td><td><script>document.write(get_version())</script></td>
 </tr>
+<tr>
+<td>Languages</td><td><script>document.write(list_languages())</script></td>
+</tr>
+<tr>
+<td></td><td>
+<input type="button" value="Clear"
+	onclick="clear_local_storage(); event.stopPropagation();"/>
+<input type="button" value="Update"
+	onclick="update_app(); event.stopPropagation();"/>
+</td>
+</tr>
 </table>
-<div onclick="location.replace('./')"></div>
 </body>
 </html>

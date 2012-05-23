@@ -19,10 +19,7 @@ td {
 	padding-right: 2em;
 	vertical-align: top;
 }
-div {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+input {
+	font-size: 20pt;
+	background: orange;
 }
