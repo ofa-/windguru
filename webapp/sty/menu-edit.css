@@ -1,4 +1,4 @@
-#contents div {
+#contents div, #spot_input {
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
 }
@@ -22,11 +22,9 @@
 }
 #spot_input {
 	display: none;
-}
-#spot_input center {
 	border: 4px double grey;
-	background: #A0A0A0;
-	vertical-align: middle;
+	background: #FFC200;
+	padding: .2em;
 }
 #spot_input input {
 	display: block;
