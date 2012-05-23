@@ -172,7 +172,7 @@ function animate_width(butt, post_animation_func) {
 		butt.original_width = parseInt(
 			document.defaultView.getComputedStyle(butt, "")
 			.getPropertyValue("width"));
-		xxflate_butt(butt, 100, 5, post_animation_func);
+		xxflate_butt(butt, 100, 0, post_animation_func);
 	}
 	else {
 		xxflate_butt(butt, 0, 100, post_animation_func);
@@ -180,7 +180,7 @@ function animate_width(butt, post_animation_func) {
 }
 
 function xxflate_butt(butt, from, dest, post_animation_func) {
-	butt.style.width = butt.original_width*from/100 + "px";
+	butt.style.width = parseInt(butt.original_width*from/100) + "px";
 	if (from == dest) {
 		if (dest == 100) {
 			butt.original_width = null;
@@ -190,10 +190,10 @@ function xxflate_butt(butt, from, dest, post_animation_func) {
 		post_animation_func();
 	}
 	else {
-		var inc = from > dest ? from - 5 : from + 5;
+		var inc = from > dest ? from - 20 : from + 20;
 		setTimeout(function () {
 			xxflate_butt(butt, inc, dest, post_animation_func)
-		}, 10);
+		}, 30);
 	}
 }
 
