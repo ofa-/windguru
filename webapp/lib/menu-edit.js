@@ -38,7 +38,7 @@ function create_new_spot() {
 	var n = document.createElement("input");
 	init_button(n);
 	update_butt(n);
-	_("contents").lastChild.appendChild(n);
+	_("contents").getElementsByTagName("div")[0].appendChild(n);
 	set_curr(n);
 	animate_width(n, function () {
 	animate_width(n, function () {
