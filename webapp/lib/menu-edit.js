@@ -186,11 +186,15 @@ function animate_width(butt, post_animation_func) {
 }
 
 function xxflate_butt(butt, from, dest, post_animation_func) {
-	butt.style.width = parseInt(butt.original_width*from/100) + "px";
+	var width = parseInt(butt.original_width*from/100);
+	var margin = parseInt((butt.original_width - width)/2);
+	butt.style.width = width + "px";
+	butt.style.margin = "2px " + margin + "px";
 	if (from == dest) {
 		if (dest == 100) {
 			butt.original_width = null;
 			butt.style.width = "";
+			butt.style.margin = "";
 		}
 		butt.is_animating = false;
 		post_animation_func();
