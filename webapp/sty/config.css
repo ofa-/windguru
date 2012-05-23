@@ -7,20 +7,22 @@ html {
 body {
 	display: table-cell;
 	vertical-align: middle;
-
 	background-color: #130368;
 	font-family: Helvetica;
-	font-size: 15pt;
+	font-size: 20pt;
 	color: orange;
 }
-table {
-	margin-bottom: 2em;
-}
-td {
-	padding-right: 2em;
-	vertical-align: top;
-}
-input {
+input[type="button"] {
 	font-size: 20pt;
 	background: orange;
+}
+#config {
+	font-size: 15pt;
+}
+#config span {
+	display: inline-block;
+	width: 7em;
+}
+#config center {
+	margin-top: 2em;
 }
