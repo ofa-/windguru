@@ -17,7 +17,7 @@ function input_load_page(e) {
 	var menu = _("menu");
 	var load = _("loading-blinder");
 	load.firstChild.innerHTML = this.value;
-	load.style.display = "table-cell";
+	load.style.display = "block";
 	menu.style.display = "none";
 	e.stopPropagation();
 	var spot = this.getAttribute("spot");
@@ -74,14 +74,14 @@ function create_settings() {
 
 function show_settings(e) {
 	_("menu").style.display = "none";
-	_("settings").style.display = "table-cell";
+	_("settings").style.display = "block";
 	_("settings_button").style.display = "none";
 	document.onclick = hide_settings;
 	e.stopPropagation();
 }
 
 function hide_settings() {
-	_("menu").style.display = "table-cell";
+	_("menu").style.display = "block";
 	_("settings").style.display = "none";
 	_("settings_button").style.display = "";
 	document.onclick = toggle_menu_page;
