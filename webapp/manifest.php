@@ -3,7 +3,7 @@
 
   $manifest = "./manifest.php";
   $extra    = "manifest.extra";
-  $hashes   = "";
+  $version  = "version.txt";
   $files    = "";
   $mdate    = 0;
   $dir = new RecursiveDirectoryIterator(".");
@@ -13,19 +13,14 @@
     if (substr($file->getFilename(), 0, 1) == ".")
 	continue;
     if ($file != $manifest)
-    {
       $files  .= substr($file, 2) . "\n";
-      $hashes .= md5_file($file);
-    }
     $mdate = max($mdate, filemtime($file)); 
   }
   $date = date("Y-m-d H:i:s", $mdate);
-  $hash = md5($hashes);
   echo "CACHE MANIFEST\n";
-  echo "# Version: $date\n";
-  echo "# Hash   : $hash\n\n";
+  echo "# Version: " . file_get_contents($version) . "\n";
+  echo "# Build  : $date\n";
   echo "$files\n";
-  if (file_exists($extra))
-	  echo file_get_contents($extra) . "\n";
+  echo file_get_contents($extra) . "\n";
 
 ?>
