@@ -1,28 +1,17 @@
-body  {
-	position: absolute;
-	display: table;
+html {
 	width: 100%;
+}
+body {
+	display: table;
 	height: 100%;
+	width: 100%;
 	margin: 0;
-	border: 0;
 	text-align: center;
-	background-color: #130368;
-	color: orange;
-	font-size: 20pt;
-	font-family: Helvetica;
 }
 #menu {
 	display: table-cell;
 	vertical-align: middle;
-	position: relative;
-}
-input {
-	display: inline;
-	font-size: 20pt;
-	margin: 3px;
-	background-color: orange;
-	-webkit-border-radius:  9pt;
-	-moz-border-radius: 9pt;
+	margin: 0;
 }
 #menu div {
 	display: none;
