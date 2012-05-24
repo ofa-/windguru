@@ -16,10 +16,6 @@ function create_settings_dialog(target) {
 
 	var b=document.createElement("div");
 	target.appendChild(b);
-	create_button(b, txt.config, function (e) {
-		location.replace("config.html");
-		e.stopPropagation();
-	});
 	create_button(b, txt.search, function (e) {
 		location.replace("http://www.windguru.cz/touch/int/search.php");
 		e.stopPropagation();
@@ -28,6 +24,10 @@ function create_settings_dialog(target) {
 		location.replace("menu-edit.html");
 		e.stopPropagation();
 	}); 
+	create_button(b, txt.config, function (e) {
+		location.replace("config.html");
+		e.stopPropagation();
+	});
 }
 
 function create_li_entry(e, title, value) {
