@@ -1,5 +1,9 @@
+function _(id) {
+	return document.getElementById(id);
+}
+
 function toggle_menu_page(e) {
-	var div = document.getElementById("menu").getElementsByTagName("div");
+	var div = _("menu").getElementsByTagName("div");
 	for (var i=0; i<div.length; i++) {
 		if (div[i].style.display == "none")
 			continue;
@@ -10,8 +14,8 @@ function toggle_menu_page(e) {
 }
 
 function input_load_page(e) {
-	var menu = document.getElementById("menu");
-	var load = document.getElementById("loading-blinder");
+	var menu = _("menu");
+	var load = _("loading-blinder");
 	load.firstChild.innerHTML = this.value;
 	load.style.display = "table-cell";
 	menu.style.display = "none";
@@ -34,7 +38,7 @@ function get_spots_menu() {
 
 function create_menu() {
 	document.body.innerHTML = get_spots_menu();
-	var menu = document.getElementById("menu");
+	var menu = _("menu");
 	if (! menu) {
 		document.body.innerHTML = "Failed to load menu";
 		return;
@@ -69,17 +73,17 @@ function create_settings() {
 }
 
 function show_settings(e) {
-	document.getElementById("menu").style.display = "none";
-	document.getElementById("settings").style.display = "table-cell";
-	document.getElementById("settings_button").style.display = "none";
+	_("menu").style.display = "none";
+	_("settings").style.display = "table-cell";
+	_("settings_button").style.display = "none";
 	document.onclick = hide_settings;
 	e.stopPropagation();
 }
 
 function hide_settings() {
-	document.getElementById("menu").style.display = "table-cell";
-	document.getElementById("settings").style.display = "none";
-	document.getElementById("settings_button").style.display = "";
+	_("menu").style.display = "table-cell";
+	_("settings").style.display = "none";
+	_("settings_button").style.display = "";
 	document.onclick = toggle_menu_page;
 }
 
