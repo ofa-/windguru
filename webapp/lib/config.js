@@ -52,7 +52,7 @@ function get_fresh_version() {
 
 function init_config() {
 	var d = document.createElement("div");
-	d.onclick = function() { location.replace("./") };
+	d.onclick = function() { location.replace("./index.html") };
 	var s = d.style;
 	s.position = "absolute";
 	s.top = s.left = "0";

@@ -93,7 +93,7 @@ function graph_set_methods() {
 }
 
 function go_home() {
-	location.replace("./");
+	location.replace("./index.html");
 }
 
 function add_anti_click_and_buttons() {

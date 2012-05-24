@@ -60,7 +60,7 @@ function save_menu() {
 
 function quit_menu_edit() {
 	clear_curr();
-	location.replace("./");
+	location.replace("./index.html");
 }
 
 function del_or_quit() {
