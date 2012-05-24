@@ -344,7 +344,7 @@ function init() {
 	var params = decodeURIComponent(location.search)
 			.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
 	if (!params || !params[1] || !params[2]) {
-		display_error("Bad spot spec.  Use &lt;id>:<name&gt;");
+		display_error("Bad spot spec.  Use &lt;id&gt;:&lt;name&gt;");
 		return;
 	}
 	var spot_name = params[2];
