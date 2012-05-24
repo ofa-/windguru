@@ -11,7 +11,7 @@ function add_spot() {
 function add_menu() {
 	var n = document.createElement("div");
 	init_menu(n);
-	_("contents").appendChild(n);
+	_("menu").appendChild(n);
 }
 
 function save_spot() {
@@ -221,7 +221,10 @@ function remove_empty_menus(contents) {
 function init_content_panel() {
 	var contents = _("contents");
 	contents.innerHTML = localStorage.getItem("windguru.menu");
-	if (!contents.innerHTML) contents.innerHTML = "<div></div>";
+	if (!contents.innerHTML) {
+		contents.innerHTML = '<form id="menu"/>';
+		add_menu();
+	}
 
 	var spots = contents.getElementsByTagName("input");
 	for (var i=0; i < spots.length; i++) {
