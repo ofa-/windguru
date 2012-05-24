@@ -1,5 +1,5 @@
-function menu_toggle_page(e) {
-	var div = this.getElementsByTagName("div");
+function toggle_menu_page(e) {
+	var div = document.getElementById("menu").getElementsByTagName("div");
 	for (var i=0; i<div.length; i++) {
 		if (div[i].style.display == "none")
 			continue;
@@ -7,7 +7,6 @@ function menu_toggle_page(e) {
 		div[i].style.display = "none";
 		break;
 	}
-	e.stopPropagation();
 }
 
 function input_load_page(e) {
@@ -37,7 +36,7 @@ function create_menu() {
 	document.body.innerHTML = get_spots_menu();
 	var menu = document.getElementById("menu");
 	if (! menu) {
-		document.body.innerHTML = "<form>failed to load menu.xml</form>";
+		document.body.innerHTML = "Failed to load menu";
 		return;
 	}
 	var butt = menu.getElementsByTagName("input");
@@ -45,7 +44,7 @@ function create_menu() {
 		butt[i].type = "button";
 		butt[i].onclick = input_load_page;
 	}
-	menu.onclick = menu_toggle_page;
+	document.onclick = toggle_menu_page;
 }
 
 function create_loading_blinder() {
@@ -66,20 +65,22 @@ function create_settings() {
 
 	dest.appendChild(document.createElement("div"));
 	dest.lastChild.id = "settings";
-	dest.lastChild.onclick = hide_settings;
 	create_settings_dialog(dest.lastChild);
 }
 
-function show_settings() {
+function show_settings(e) {
 	document.getElementById("menu").style.display = "none";
 	document.getElementById("settings").style.display = "table-cell";
 	document.getElementById("settings_button").style.display = "none";
+	document.onclick = hide_settings;
+	e.stopPropagation();
 }
 
 function hide_settings() {
 	document.getElementById("menu").style.display = "table-cell";
 	document.getElementById("settings").style.display = "none";
 	document.getElementById("settings_button").style.display = "";
+	document.onclick = toggle_menu_page;
 }
 
 function init_index() {
