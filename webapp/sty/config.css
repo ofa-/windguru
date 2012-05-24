@@ -1,9 +1,12 @@
 #config {
 	font-size: 15pt;
+	padding: 1em;
 }
 #config span {
 	display: inline-block;
 	width: 7em;
+	font-variant: small-caps;
+	text-decoration: underline;
 }
 #config center {
 	margin-top: 2em;
