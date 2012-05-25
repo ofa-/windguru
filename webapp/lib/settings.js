@@ -52,7 +52,7 @@ function get_network_status_txt() {
 }
 
 function lang_controller() {
-	var langs = list_languages().split(", ");
+	var langs = list_languages().split(", "); // list_languages: config.js
 	var disp = document.getElementById("lang");
 	var flag = document.getElementById("flag");
 
