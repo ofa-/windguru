@@ -59,6 +59,10 @@ function init_config() {
 	s.width = s.height = "100%";
 	s.zIndex = "-1";
 	document.body.appendChild(d);
+	applicationCache.addEventListener('updateready', update_ready, false);
+	applicationCache.addEventListener('noupdate', no_update, false);
+	applicationCache.addEventListener('downloading', update_app, false);
+	applicationCache.addEventListener('progress', update_app, false);
 }
 
 function clear_local_storage() {
@@ -76,6 +80,23 @@ function clear_local_storage() {
 	}
 }
 
+var ver_key = "windguru.version";
 function update_app() {
+	var version = localStorage.getItem(ver_key);
+	if (version.match(/\(up\)$/)) return;
+
+	localStorage.setItem(ver_key, version + " (up)");
 	applicationCache.update();
+	location.reload();
+}
+
+function update_ready() {
+	localStorage.removeItem(ver_key);
+	location.reload();
+}
+
+function no_update() {
+	var version = localStorage.getItem(ver_key);
+	if (version.match(/\(up\)$/))
+		update_ready();
 }
