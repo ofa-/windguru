@@ -71,6 +71,7 @@ function clear_local_storage() {
 		var menu_sav = localStorage.getItem(menu_key);
 		localStorage.clear();
 		localStorage.setItem(menu_key, menu_sav);
+		location.reload();
 	}
 	else {
 		if (confirm("Spots already cleared.\nReset menu ?")) {
