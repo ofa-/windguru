@@ -13,13 +13,13 @@
 
 <body onload="init_config()">
 <div id="config">
-<span>Site</span><script>document.write(get_site())</script><br/>
-<span>Version</span><script>document.write(get_version())</script><br/>
-<span>Languages</span><script>document.write(list_languages())</script><br/>
-<center>
+<center><script>document.write(get_site())</script></center>
+<span>version</span><script>document.write(get_version())</script><br/>
+<span>languages</span><script>document.write(list_languages())</script><br/>
+<span>
 <input type="button" value="Clear" onclick="clear_local_storage()"/>
+</span>
 <input type="button" value="Update" onclick="update_app()"/>
-</center>
 </div>
 </body>
 </html>

@@ -1,13 +1,20 @@
 #config {
 	font-size: 15pt;
 	padding: 1em;
+	text-align: left;
 }
 #config span {
 	display: inline-block;
-	width: 7em;
+	width: 45%;
 	font-variant: small-caps;
 	text-decoration: underline;
+	text-align: right;
+	margin-right: 1.5em;
+}
+#config input {
+	margin: 1em -.4em;
+	font-size: 17pt;
 }
 #config center {
-	margin-top: 2em;
+	margin-bottom: .5em;
 }
