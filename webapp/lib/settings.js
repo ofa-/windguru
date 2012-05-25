@@ -17,7 +17,10 @@ function create_settings_dialog(target) {
 	var b=document.createElement("div");
 	target.appendChild(b);
 	create_button(b, txt.search, function (e) {
-		location.replace("http://www.windguru.cz/touch/int/search.php");
+		location.replace("http://www.windguru.cz/touch/"
+			+ lang_controller().get_lang()
+			+ "/search.php"
+		);
 		e.stopPropagation();
 	}); 
 	create_button(b, txt.spots, function (e) {
