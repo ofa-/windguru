@@ -4,8 +4,6 @@ function _(id) {
 
 function add_spot() {
 	_("spot_input").style.display = "block";
-	_("controls").style.display = "none";
-	_("contents").style.display = "none";
 }
 
 function add_menu() {
@@ -28,9 +26,7 @@ function save_spot() {
 }
 
 function exit_edit() {
-	_("spot_input").style.display = "";
-	_("controls").style.display = "";
-	_("contents").style.display = "";
+	_("spot_input").style.display = "none";
 	clear_curr();
 }
 	
