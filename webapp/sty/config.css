@@ -1,4 +1,6 @@
 #config {
+	display: table-cell;
+	vertical-align: middle;
 	font-size: 15pt;
 	padding: 1em;
 	text-align: left;

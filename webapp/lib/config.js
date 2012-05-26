@@ -51,14 +51,10 @@ function get_fresh_version() {
 }
 
 function init_config() {
-	var d = document.createElement("div");
-	d.onclick = function() { location.replace("./index.html") };
-	var s = d.style;
-	s.position = "absolute";
-	s.top = s.left = "0";
-	s.width = s.height = "100%";
-	s.zIndex = "-1";
-	document.body.appendChild(d);
+	document.getElementById("config").onclick = function(e) {
+		if (e.target.id == "config")
+			location.replace("./index.html")
+	};
 	applicationCache.addEventListener('updateready', update_ready, false);
 	applicationCache.addEventListener('noupdate', no_update, false);
 	applicationCache.addEventListener('downloading', update_app, false);
