@@ -2,28 +2,38 @@
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
 }
-#contents {
-	margin-top: 3em;
-}
-#contents div {
-	border: 1px solid #B46911;
-	min-height: 0.5em;
-	max-width: 22em;
-	padding: 2px;
-	margin: 2px;
+#contents menu {
+	display: table;
 }
 #contents input {
-	margin: 2px;
 	background: #ECCC66;
 }
 #controls {
 	position: fixed;
 	top: 0;
 	left: 0;
-	margin-top: .2em;
+}
+#controls, #top_space {
 	width: 100%;
 }
-#controls button img, #spot_input button img {
+#controls button, #top_space button {
+	margin: .2em .1em;
+}
+#controls center, #fader {
+	background: #130368;
+}
+#fader {
+	height: 1em;
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		color-stop(0, rgba(13,3,68, 1)),
+		color-stop(1, rgba(13,3,68, 0)));
+	background: -moz-linear-gradient(
+		center bottom,
+		rgba(13,3,68, 0) 0%,
+		rgba(13,3,68, 1) 100%);
+}
+button img {
 	height: 1.2em;
 	margin-bottom: -7px;
 }
@@ -34,6 +44,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+	text-align: center;
 }
 #spot_input center {
 	display: inline-block;

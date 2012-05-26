@@ -7,9 +7,9 @@ function add_spot() {
 }
 
 function add_menu() {
-	var n = document.createElement("div");
+	var n = document.createElement("page");
 	init_menu(n);
-	_("menu").appendChild(n);
+	_("contents").appendChild(n);
 }
 
 function save_spot() {
@@ -34,7 +34,7 @@ function create_new_spot() {
 	var n = document.createElement("input");
 	init_button(n);
 	update_butt(n);
-	_("contents").getElementsByTagName("div")[0].appendChild(n);
+	_("contents").getElementsByTagName("page")[0].appendChild(n);
 	set_curr(n);
 	animate_width(n, function () {
 	animate_width(n, function () {
@@ -205,7 +205,7 @@ function xxflate_butt(butt, from, dest, post_animation_func) {
 
 
 function remove_empty_menus(contents) {
-	var l = contents.getElementsByTagName("div");
+	var l = contents.getElementsByTagName("page");
 	for (var i=0; i < l.length; i++) {
 		if (! l[i].firstChild) {
 			l[i].parentNode.removeChild(l[i]);
@@ -215,19 +215,37 @@ function remove_empty_menus(contents) {
 }
 
 function init_content_panel() {
-	var contents = _("contents");
-	contents.innerHTML = localStorage.getItem("windguru.menu");
-	if (!contents.innerHTML) {
-		contents.innerHTML = '<form id="menu"/>';
+	var doc = document.createElement("div");
+	doc.innerHTML = localStorage.getItem("windguru.menu");
+	if (!doc.innerHTML) {
 		add_menu();
+		return;
 	}
-
-	var spots = contents.getElementsByTagName("input");
+	var spots = doc.getElementsByTagName("input");
 	for (var i=0; i < spots.length; i++) {
 		init_button(spots[i]);
 	}
-	var menus = contents.getElementsByTagName("div");
-	for (var i=0; i < menus.length; i++) {
-		init_menu(menus[i]);
+	var menus = doc.getElementsByTagName("page");
+	for (var menu; menu = menus[0]; ) {
+		init_menu(menu);
+		_("contents").appendChild(document.createElement("div"));
+		_("contents").lastChild.appendChild(menu);
 	}
+}
+
+function setup_controls_menu() {
+	var fader = document.createElement("div");
+	fader.id = "fader";
+	_("controls").appendChild(fader);
+	var top_space = document.createElement("div");
+	top_space.id = "top_space";
+	top_space.style.visibility = "hidden";
+	top_space.innerHTML = _("controls").innerHTML;
+	document.body.appendChild(top_space);
+	document.body.appendChild(_("contents"));
+}
+
+function init_menu_editor() {
+	init_content_panel();
+	setup_controls_menu();
 }

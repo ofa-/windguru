@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<form id="menu">
-<div>
+<menu>
+<page>
 <input value="Grenoble"		spot="18666"	/>
 <input value="Bazine"		spot="43016"	/>
 <input value="Chambéry"		spot="46035"	/>
 <input value="Les Favres"	spot="319721"	/>
-</div>
-<div>
+</page>
+<page>
 <input value="Granville"	spot="13353"	/>
 <input value="Besançon"		spot="179394"	/>
 <input value="Novalaise"	spot="100574"	/>
 <input value="Le Soubon"	spot="350556"	/>
 <input value="Lardier"		spot="323372"	/>
 <input value="Figon"		spot="319727"	/>
-</div>
-<div>
+</page>
+<page>
 <input value="Paris"		spot="171393"	/>
 <input value="Dublin"		spot="240877"	/>
 <input value="Poprad"		spot="63770"	/>
-</div>
-<div>
+</page>
+<page>
 <input value="Grenoble (long)"	spot="18666"/>
 <input value="Bazine (long)"	spot="43016"/>
-</div>
-</form>
+</page>
+</menu>
