@@ -1,24 +1,26 @@
 /* centered display */
 html {
-	display: table;
 	height: 100%;
-	margin: auto;
 }
 body {
-	display: table-cell;
-	vertical-align: middle;
+	display: table;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 }
+
 /* overall style */
 body {
 	background: #130368;
 	font-family: Helvetica;
 	font-size: 20pt;
 	color: orange;
+	cursor: pointer;
 }
 button, input[type="button"] {
 	font-size: 20pt;
 	background: orange;
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
-	margin: 2px;
+	margin: .2em .5em;
 }
