@@ -62,7 +62,7 @@ function init_config() {
 }
 
 function clear_local_storage() {
-	if (localStorage.length > 1) {
+	if (localStorage.length > 3) {
 		var menu_key = "windguru.menu";
 		var menu_sav = localStorage.getItem(menu_key);
 		localStorage.clear();
