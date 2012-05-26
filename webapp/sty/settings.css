@@ -1,5 +1,15 @@
 #settings {
-	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: table;
+	text-align: center;
+	background: #130368;
+}
+#settings div {
+	display: table-cell;
 	vertical-align: middle;
 }
 ul {
@@ -25,27 +35,21 @@ ul li:last-child {
 #settings span {
 	margin-left: .5em;
 }
-#settings div {
-	display: block;
-}
 #settings_button {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	bottom: 0;
-	margin: 0;
 	width: 100%;
 	height: 24pt;
 	text-align: center;
+	padding-top: .5em;
 	font-size:  14pt;
-	color: #130368;
-}
-#settings_button:hover  {
-	background-color: red;
 	color: orange;
+	background: red;
 	-webkit-border-radius:  9pt;
 	-moz-border-radius: 9pt;
+	opacity: 0;
 }
-#settings_button span {
-	display: inline-block;
-	margin-top: 4pt;
+#settings_button:hover  {
+	opacity: 1;
 }

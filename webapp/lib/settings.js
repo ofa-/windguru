@@ -1,3 +1,27 @@
+function create_settings_button(dest) {
+	dest.appendChild(document.createElement("div"));
+	dest.lastChild.id = "settings_button";
+	dest.lastChild.innerHTML = "Settings";
+	dest.lastChild.onclick = show_settings;
+	dest.lastChild.ontouchstart = function () {};
+	dest.lastChild.ontouchend   = function () {};
+}
+
+function show_settings(e) {
+	_("settings").style.display = "";
+	_("settings_button").style.display = "none";
+	document.onclick = hide_settings;
+	document.body.style.overflow = "hidden";
+	e.stopPropagation();
+}
+
+function hide_settings() {
+	_("settings").style.display = "none";
+	_("settings_button").style.display = "block";
+	document.onclick = null;
+	document.body.style.overflow = "";
+}
+
 function create_settings_dialog(target) {
 	var txt = {
 		network: "Network :",
@@ -7,6 +31,11 @@ function create_settings_dialog(target) {
 		spots: "Spots",
 	};
 
+	target.id = "settings";
+	target.appendChild(document.createElement("div"));
+	target.style.display = "none";
+	target = target.lastChild;
+
 	var e = document.createElement("ul");
 	target.appendChild(e);
 	create_li_entry(e, txt.network, get_network_status_txt());
@@ -14,7 +43,7 @@ function create_settings_dialog(target) {
 	lang_controller().setup(e.lastChild);
 	e.onclick = function (e) { e.stopPropagation(); };
 
-	var b=document.createElement("div");
+	var b=document.createElement("center");
 	target.appendChild(b);
 	create_button(b, txt.search, function (e) {
 		location.replace("http://www.windguru.cz/touch/"
