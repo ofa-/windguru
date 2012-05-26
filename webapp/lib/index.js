@@ -2,26 +2,19 @@ function _(id) {
 	return document.getElementById(id);
 }
 
-function toggle_menu_page(e) {
-	var div = _("menu").getElementsByTagName("div");
-	for (var i=0; i<div.length; i++) {
-		if (div[i].style.display == "none")
-			continue;
-		div[(i+1) % div.length].style.display = "block";
-		div[i].style.display = "none";
-		break;
-	}
+function input_load_page(e) {
+	var butt = this;
+	e.stopPropagation();
+
+	_("contents").style.display = "none";
+	_("loading-blinder").firstChild.innerHTML = butt.value;
+	_("loading-blinder").style.display = "table";
+	var spot_specs = butt.getAttribute("spot") + "|" + butt.value;
+	location.replace("spot.html?" + spot_specs);
 }
 
-function input_load_page(e) {
-	var menu = _("menu");
-	var load = _("loading-blinder");
-	load.firstChild.innerHTML = this.value;
-	load.style.display = "block";
-	menu.style.display = "none";
-	e.stopPropagation();
-	var spot = this.getAttribute("spot");
-	location.replace("spot.html?" + spot + "|" + this.value);
+function page_scroll_to_next(e) {
+	var page = this;
 }
 
 function get_spots_menu() {
@@ -36,59 +29,39 @@ function get_spots_menu() {
 	return menu;
 }
 
-function create_menu() {
-	document.body.innerHTML = get_spots_menu();
-	var menu = _("menu");
-	if (! menu) {
-		document.body.innerHTML = "Failed to load menu";
-		return;
-	}
+function create_menu(dest) {
+	var menu = document.createElement("div");
+	menu.innerHTML = get_spots_menu();
 	var butt = menu.getElementsByTagName("input");
 	for (var i=0; i<butt.length; i++) {
 		butt[i].type = "button";
 		butt[i].onclick = input_load_page;
 	}
-	document.onclick = toggle_menu_page;
+	var list = menu.getElementsByTagName("page");
+	for (var page; page = list[0]; ) {
+		page.onclick = page_scroll_to_next;
+		dest.appendChild(document.createElement("div"));
+		dest.lastChild.appendChild(page);
+	}
 }
 
-function create_loading_blinder() {
-	document.body.appendChild(document.createElement("div"));
-	document.body.lastChild.id = "loading-blinder";
-	document.body.lastChild.appendChild(document.createElement("center"));
-	document.body.lastChild.appendChild(create_spinner());
-}
-
-function create_settings() {
-	var dest = document.body;
-	dest.appendChild(document.createElement("span"));
-	dest.lastChild.id = "settings_button";
-	dest.lastChild.innerHTML = "<span>Settings</span>";
-	dest.lastChild.onclick = show_settings;
-	dest.lastChild.ontouchstart = function () {};
-	dest.lastChild.ontouchend   = function () {};
-
+function create_loading_blinder(dest) {
 	dest.appendChild(document.createElement("div"));
-	dest.lastChild.id = "settings";
+	dest.lastChild.id = "loading-blinder";
+	dest.lastChild.appendChild(document.createElement("center"));
+	dest.lastChild.appendChild(create_spinner());
+}
+
+function create_settings(dest) {
+	dest.appendChild(document.createElement("div"));
 	create_settings_dialog(dest.lastChild);
-}
-
-function show_settings(e) {
-	_("menu").style.display = "none";
-	_("settings").style.display = "block";
-	_("settings_button").style.display = "none";
-	document.onclick = hide_settings;
-	e.stopPropagation();
-}
-
-function hide_settings() {
-	_("menu").style.display = "block";
-	_("settings").style.display = "none";
-	_("settings_button").style.display = "";
-	document.onclick = toggle_menu_page;
+	create_settings_button(document.body);
 }
 
 function init_index() {
-	create_menu();
-	create_loading_blinder();
-	create_settings();
+	document.body.innerHTML = "<div id='contents'></div>";
+	var contents = _("contents");
+	create_menu(contents);
+	create_loading_blinder(document.body);
+	create_settings(document.body);
 }
