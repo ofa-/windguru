@@ -7,6 +7,7 @@ function input_load_page(e) {
 	e.stopPropagation();
 
 	_("contents").style.display = "none";
+	_("settings_button").style.display = "none";
 	_("loading-blinder").firstChild.innerHTML = butt.value;
 	_("loading-blinder").style.display = "table";
 	var spot_specs = butt.getAttribute("spot") + "|" + butt.value;
