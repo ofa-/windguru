@@ -46,15 +46,13 @@ body { background: #130368; overflow:hidden; }
 	height: 100%;
 }
 #home_button {
+	position: fixed;
 	width: 52px;
 }
 #home_button:hover {
-	width: 52px;
+	border-right: 1px solid #00A000;
+	background: #008000 url('../img/home.png') no-repeat center center;
 	opacity: .8;
-	border-right: 1px solid blue;
-	border-left : 1px solid blue;
-	border-top  : 1px solid blue;
-	background: green url('../img/home.png') no-repeat center center;
 }
 
 #container {
