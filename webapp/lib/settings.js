@@ -31,7 +31,7 @@ function create_settings_dialog(target) {
 	lang_controller().setup(target.lastChild);
 
 	create_button(target, "Search Spot", function (e) {
-		location.replace("http://www.windguru.cz/touch/"
+		location.assign("http://www.windguru.cz/touch/"
 			+ lang_controller().get_lang()
 			+ "/search.php"
 		);
