@@ -22,3 +22,4 @@ major=${version%.*}
 minor=${version##*.}
 echo $major.$((minor+1)) > version
 lftp $LFTP_URL -e "mirror -X *.bak -X *.orig -Rn .; exit"
+echo "Published version: $(cat version)"
