@@ -106,7 +106,6 @@ function add_anti_click_and_buttons() {
 	elt.setAttribute("id", "home_button");
 	elt.onclick = go_home;
 	elt.ontouchstart = function() {}
-	elt.ontouchend   = function() {}
 	div.appendChild(elt);
 }
 
@@ -204,6 +203,14 @@ function install_loading_indicator(txt) {
 	div.appendChild(elt);
 	elt = create_spinner();
 	div.appendChild(elt);
+	document.body.style.overflow = "hidden";
+	document.ontouchmove = function (e) { e.preventDefault() };
+}
+
+function hide_loading_indicator() {
+	document.body.style.overflow = "auto";
+	document.ontouchmove = null;
+	_("loading-blinder").style.display = "none";
 }
 
 function populate_container() {
@@ -368,6 +375,5 @@ function init() {
 	var view = options.match(/,view=([12]),?/);
 	set_view(view ? view[1] : 0);
 	//rescale();
-	document.body.style.overflow = "auto";
-	_("loading-blinder").style.display = "none";
+	hide_loading_indicator();
 }
