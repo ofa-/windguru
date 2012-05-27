@@ -27,27 +27,44 @@ function create_settings_dialog(target) {
 	target.appendChild(document.createElement("div"));
 	target = target.lastChild;
 
-	create_button(target, 'Language: <img id="flag"/><span id="lang"/>');
-	lang_controller().setup(target.lastChild);
-
-	create_button(target, "Search Spot", function (e) {
+	create_button(target, "language" + '<img id="flag"/><span id="lang"/>',
+	function () {
+		var controller = lang_controller();
+		controller.click();
+		controller.update_buttons(_("settings"));
+	});
+	create_button(target, "search", function () {
 		location.assign("http://www.windguru.cz/touch/"
 			+ lang_controller().get_lang()
 			+ "/search.php"
 		);
 	}); 
-	create_button(target, "Edit Spots", function (e) {
+	create_button(target, "edit", function () {
 		location.replace("menu-edit.html");
 	}); 
-	create_button(target, "About", function (e) {
+	create_button(target, "about", function () {
 		location.replace("config.html");
 	});
+	var controller = lang_controller();
+	controller.init();
+	controller.update_buttons(target);
 }
 
 function create_button(e, txt, onclick) {
 	e.appendChild(document.createElement("button"));
 	e.lastChild.innerHTML = txt;
 	e.lastChild.onclick = function (e) { onclick(); e.stopPropagation() };
+}
+
+function set_buttons_language(target, lang) {
+	var butts = target.getElementsByTagName("button");
+	for (var i=0,butt,node,text; butt = butts[i]; i++) {
+		if (!butt.i18n_key)
+			butt.i18n_key = butt.firstChild.nodeValue;
+		node = butt.firstChild;
+		text = i18n().get_text(butt.i18n_key, lang);
+		butt.replaceChild(document.createTextNode(text), node);
+	}
 }
 
 function lang_controller() {
@@ -74,11 +91,10 @@ function lang_controller() {
 		return langs[(i+1)%langs.length];
 	}
 
-	function lang_onclick(e) {
+	function click() {
 		var lang = next_lang(get_lang());
 		set_lang(lang);
 		localStorage.setItem("windguru.language", lang);
-		e.stopPropagation();
 	}
 
 	function init() {
@@ -86,10 +102,47 @@ function lang_controller() {
 		set_lang(lang ? lang : next_lang());
 	}
 
-	function setup(elt) {
-		init();
-		elt.onclick = lang_onclick;
+	function update_buttons(target) {
+		set_buttons_language(target, this.get_lang());
 	}
 
-	return { setup: setup, init: init, get_lang: get_lang };
+	return {
+		init:		init,
+		get_lang:	get_lang,
+		click:		click,
+		update_buttons:	update_buttons,
+	};
+}
+
+function i18n() {
+	return {
+		language: {
+			fr: "Langue : ",
+			en: "Language: ",
+			cz: "Jazyk: ",
+		},
+		search: {
+			fr: "Chercher un spot",
+			en: "Search Spot",
+			cz: "Vyhledávání",
+		},
+		edit: {
+			fr: "Éditer les spots",
+			en: "Edit Spots",
+			cz: "Upravit lokality",
+		},
+		about: {
+			fr: "À propos",
+			en: "About",
+		},
+		version: {
+			fr: "Version",
+			en: "Version",
+		},
+
+		get_text: function (key, lang) {
+			var txt = this[key][lang];
+			return txt ? txt : this.get_text(key, "en");
+		}
+	}
 }
