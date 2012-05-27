@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html manifest="manifest.php">
 <head>
 	<title>Windguru Config</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,12 +14,9 @@
 <body onload="init_config()">
 <div id="config">
 <center><script>document.write(get_site())</script></center>
-<span>version</span><script>document.write(get_version())</script><br/>
+<span>version</span><script>document.write(get_version())</script>
+			<tt id="up"></tt><br/>
 <span>languages</span><script>document.write(list_languages())</script><br/>
-<span>
-<input type="button" value="Clear" onclick="clear_local_storage()"/>
-</span>
-<input type="button" value="Update" onclick="update_app()"/>
 </div>
 </body>
 </html>
