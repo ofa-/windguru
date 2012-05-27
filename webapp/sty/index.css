@@ -5,13 +5,13 @@
 #contents > div {
 	display: table;
 	margin: .5em auto;
+	padding: .3em;
 }
 page {
 	display: table-cell;
 	vertical-align: middle;
-	border: 1px solid #B46911;
-	padding: 2px;
-	margin: 2px;
+	border: 1px dashed #B46911;
+	padding: .2em;
 	width: 20em;
 	height: 12em;
 	-webkit-border-radius: .5em;
