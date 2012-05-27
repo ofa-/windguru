@@ -245,7 +245,18 @@ function setup_controls_menu() {
 	document.body.appendChild(_("contents"));
 }
 
+function disable_double_tap() {
+	document.addEventListener(
+	'touchend', function(e) {
+		var curr = new Date().getTime();
+		if (curr - e.target.last < 500)
+			e.preventDefault();
+		e.target.last = curr;
+	});
+}
+
 function init_menu_editor() {
 	init_content_panel();
 	setup_controls_menu();
+	disable_double_tap();
 }
