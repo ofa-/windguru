@@ -17,4 +17,8 @@ if ! lftp $LFTP_URL -e "exit" 2> /dev/null ; then
 fi
 
 cd webapp
+version=$(cat version)
+major=${version%.*}
+minor=${version##*.}
+echo $major.$((minor+1)) > version
 lftp $LFTP_URL -e "mirror -X *.bak -X *.orig -Rn .; exit"
