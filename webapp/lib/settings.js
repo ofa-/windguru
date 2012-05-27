@@ -1,17 +1,15 @@
 function create_settings_button(dest) {
 	dest.appendChild(document.createElement("div"));
 	dest.lastChild.id = "settings_button";
-	dest.lastChild.innerHTML = "Settings";
+	dest.lastChild.innerHTML = "<img src='img/settings.png'>";
 	dest.lastChild.onclick = show_settings;
 	dest.lastChild.ontouchstart = function () {};
-	dest.lastChild.ontouchend   = function () {};
 }
 
 function show_settings(e) {
 	_("settings").style.display = "";
 	_("settings_button").style.display = "none";
 	document.onclick = hide_settings;
-	document.body.style.overflow = "hidden";
 	e.stopPropagation();
 }
 
@@ -19,68 +17,37 @@ function hide_settings() {
 	_("settings").style.display = "none";
 	_("settings_button").style.display = "block";
 	document.onclick = null;
-	document.body.style.overflow = "";
 }
 
 function create_settings_dialog(target) {
-	var txt = {
-		network: "Network :",
-		language: "Language :",
-		config: "Config",
-		search: "Search",
-		spots: "Spots",
-	};
-
 	target.id = "settings";
-	target.appendChild(document.createElement("div"));
 	target.style.display = "none";
+	target.appendChild(document.createElement("div"));
+	target = target.lastChild;
+	target.appendChild(document.createElement("div"));
 	target = target.lastChild;
 
-	var e = document.createElement("ul");
-	target.appendChild(e);
-	create_li_entry(e, txt.network, get_network_status_txt());
-	create_li_entry(e, txt.language, '<img id="flag"/><span id="lang"/>');
-	lang_controller().setup(e.lastChild);
-	e.onclick = function (e) { e.stopPropagation(); };
+	create_button(target, 'Language: <img id="flag"/><span id="lang"/>');
+	lang_controller().setup(target.lastChild);
 
-	var b=document.createElement("center");
-	target.appendChild(b);
-	create_button(b, txt.search, function (e) {
+	create_button(target, "Search Spot", function (e) {
 		location.replace("http://www.windguru.cz/touch/"
 			+ lang_controller().get_lang()
 			+ "/search.php"
 		);
-		e.stopPropagation();
 	}); 
-	create_button(b, txt.spots, function (e) {
+	create_button(target, "Edit Spots", function (e) {
 		location.replace("menu-edit.html");
-		e.stopPropagation();
 	}); 
-	create_button(b, txt.config, function (e) {
+	create_button(target, "About", function (e) {
 		location.replace("config.html");
-		e.stopPropagation();
 	});
 }
 
-function create_li_entry(e, title, value) {
-	e.appendChild(document.createElement("li"));
-	e.lastChild.innerHTML = title;
-	e.lastChild.appendChild(document.createElement("span"));
-	e.lastChild.lastChild.innerHTML = value;
-}
-
-function create_button(e, title, onclick) {
-	e.appendChild(document.createElement("input"));
-	e.lastChild.type = "button";
-	e.lastChild.value = title;
-	e.lastChild.onclick = onclick;
-}
-
-function get_network_status_txt() {
-	var txt="<img src='img/";
-	txt += navigator.onLine ? "ok.png" : "no.png";
-	txt += "'/>";
-	return txt;
+function create_button(e, txt, onclick) {
+	e.appendChild(document.createElement("button"));
+	e.lastChild.innerHTML = txt;
+	e.lastChild.onclick = function (e) { onclick(); e.stopPropagation() };
 }
 
 function lang_controller() {
