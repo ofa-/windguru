@@ -82,6 +82,18 @@ function init_config() {
 	applicationCache.addEventListener('progress', update_progress, false);
 }
 
+function update_progress() {
+	var elt = document.getElementById("up");
+	elt.innerHTML = " (up) " + ".oO0Oo"[elt.progress++ % 6];
+}
+
+var ver_key = "windguru.version";
+function update_ready() {
+	localStorage.removeItem(ver_key);
+	applicationCache.swapCache();
+	location.reload();
+}
+
 function clear_local_storage() {
 	if (localStorage.length > 3) {
 		var menu_key = "windguru.menu";
@@ -95,16 +107,4 @@ function clear_local_storage() {
 		return true;
 	}
 	return false;
-}
-
-function update_progress() {
-	var elt = document.getElementById("up");
-	elt.innerHTML = " (up) " + ".oO0Oo"[elt.progress++ % 6];
-}
-
-var ver_key = "windguru.version";
-function update_ready() {
-	localStorage.removeItem(ver_key);
-	applicationCache.swapCache();
-	location.reload();
 }
