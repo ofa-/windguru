@@ -7,11 +7,12 @@
 }
 #config span {
 	display: inline-block;
-	width: 45%;
+	width: 50%;
 	font-variant: small-caps;
 	text-decoration: underline;
 	text-align: right;
 	margin-right: 1.5em;
+	margin-left: -1.5em;
 }
 #config div {
 	text-align: left;
