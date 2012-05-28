@@ -76,6 +76,7 @@ function init_config() {
 			+ "<br>";
 	target.appendChild(e);
 	document.body.appendChild(target);
+	document.getElementById("up").progress = 0;
 
 	applicationCache.addEventListener('updateready', update_ready, false);
 	applicationCache.addEventListener('progress', update_progress, false);
@@ -97,10 +98,9 @@ function clear_local_storage() {
 }
 
 var ver_key = "windguru.version";
-var i = 0;
 function update_progress() {
 	var elt = document.getElementById("up");
-	elt.innerHTML = " (up) " + ".oO0Oo"[i++%6];
+	elt.innerHTML = " (up) " + ".oO0Oo"[elt.progress++ % 6];
 }
 
 function update_ready() {
