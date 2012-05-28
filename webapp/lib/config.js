@@ -87,8 +87,8 @@ function update_progress() {
 	elt.innerHTML = " (up) " + ".oO0Oo"[elt.progress++ % 6];
 }
 
-var ver_key = "windguru.version";
 function update_ready() {
+	var ver_key = "windguru.version";
 	localStorage.removeItem(ver_key);
 	applicationCache.swapCache();
 	location.reload();
