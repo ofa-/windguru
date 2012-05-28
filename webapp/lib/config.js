@@ -3,8 +3,12 @@ function list_languages() {
 	var languages = localStorage.getItem(langs_key);
 	if (languages) return languages;
 
-	languages = get_fresh_list_languages();
-	localStorage.setItem(langs_key, languages);
+	try {
+		languages = get_fresh_list_languages();
+		localStorage.setItem(langs_key, languages);
+	} catch (e) {
+		languages = "fr, en";
+	}
 	return languages;
 }
 
@@ -27,34 +31,52 @@ function get_fresh_list_languages() {
 	return ret.replace(/, $/, "");
 }
 
-function get_site() {
-	return location.hostname + location.pathname.replace(/[^\/]*$/, "");
-}
 
 function get_version() {
 	var ver_key = "windguru.version";
 	var version = localStorage.getItem(ver_key);
 	if (version) return version;
 
-	version = get_fresh_version();
-	localStorage.setItem(ver_key, version);
+	try {
+		version = get_fresh_version();
+		localStorage.setItem(ver_key, version);
+	} catch (e) {
+		version = "--";
+	}
 	return version;
 }
 
 function get_fresh_version() {
 	var req = new XMLHttpRequest();
-	req.open("GET", "manifest.php", false);
+	req.open("GET", "version", false);
 	req.send(null);
-
-	var lines = req.responseText.split("\n");
-	return lines[1].replace(/# Version: /, "");
+	return req.responseText;
 }
 
 function init_config() {
-	document.getElementById("config").onclick = function(e) {
-		if (e.target.id == "config")
-			location.replace("./index.html")
-	};
+	var target = document.createElement("div");
+	target.id = "config";
+	target.onclick = function(e) { location.replace("./index.html") };
+
+	var e = document.createElement("center");
+	e.innerHTML =	  location.hostname + "<br>"
+			+ location.pathname.replace(/[^\/]*$/, "");
+	e.onclick = function (e) {
+		e.stopPropagation();
+		if (!clear_local_storage())
+			return;
+		e.target.lastChild.nodeValue = "CLEARED";
+		setTimeout(function () { location.reload(); }, 1000);
+	}
+	target.appendChild(e);
+	e = document.createElement("div");
+	e.innerHTML = 	  "<span>version</span>" + get_version()
+			+ '<tt id="up"></tt><br>'
+			+ "<span>languages</span>" + list_languages()
+			+ "<br>";
+	target.appendChild(e);
+	document.body.appendChild(target);
+
 	applicationCache.addEventListener('updateready', update_ready, false);
 	applicationCache.addEventListener('progress', update_progress, false);
 }
@@ -65,14 +87,13 @@ function clear_local_storage() {
 		var menu_sav = localStorage.getItem(menu_key);
 		localStorage.clear();
 		localStorage.setItem(menu_key, menu_sav);
-		location.reload();
+		return true;
 	}
-	else {
-		if (confirm("Spots already cleared.\nReset menu ?")) {
-			localStorage.clear();
-			location.reload();
-		}
+	if (confirm("Reset menu ?")) {
+		localStorage.clear();
+		return true;
 	}
+	return false;
 }
 
 var ver_key = "windguru.version";
