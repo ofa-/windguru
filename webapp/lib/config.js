@@ -97,13 +97,14 @@ function clear_local_storage() {
 	return false;
 }
 
-var ver_key = "windguru.version";
 function update_progress() {
 	var elt = document.getElementById("up");
 	elt.innerHTML = " (up) " + ".oO0Oo"[elt.progress++ % 6];
 }
 
+var ver_key = "windguru.version";
 function update_ready() {
 	localStorage.removeItem(ver_key);
+	applicationCache.swapCache();
 	location.reload();
 }
