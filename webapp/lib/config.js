@@ -78,8 +78,18 @@ function init_config() {
 	document.body.appendChild(target);
 	document.getElementById("up").progress = 0;
 
-	applicationCache.addEventListener('updateready', update_ready, false);
 	applicationCache.addEventListener('progress', update_progress, false);
+	applicationCache.addEventListener('downloading', poll_status, false);
+}
+
+function poll_status() { // event 'updateready' does not fire on FF (2012-05)
+	setInterval(function() {
+		switch (applicationCache.status) {
+			case applicationCache.IDLE:
+			case applicationCache.UPDATEREADY:
+				update_ready();
+		}
+	}, 1000);
 }
 
 function update_progress() {
@@ -90,7 +100,6 @@ function update_progress() {
 function update_ready() {
 	var ver_key = "windguru.version";
 	localStorage.removeItem(ver_key);
-	applicationCache.swapCache();
 	location.reload();
 }
 
