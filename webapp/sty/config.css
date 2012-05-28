@@ -3,7 +3,7 @@
 	vertical-align: middle;
 	font-size: 15pt;
 	padding: 1em;
-	text-align: left;
+	text-align: center;
 }
 #config span {
 	display: inline-block;
@@ -13,10 +13,10 @@
 	text-align: right;
 	margin-right: 1.5em;
 }
-#config input {
-	margin: 1em -.4em;
-	font-size: 17pt;
+#config div {
+	text-align: left;
 }
 #config center {
-	margin-bottom: .5em;
+	margin-bottom: 1em;
+	display: inline-block;
 }
