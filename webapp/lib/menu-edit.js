@@ -252,7 +252,7 @@ function disable_double_tap() {
 		if (curr - e.target.last < 500)
 			e.preventDefault();
 		e.target.last = curr;
-	});
+	}, false);
 }
 
 function init_menu_editor() {
