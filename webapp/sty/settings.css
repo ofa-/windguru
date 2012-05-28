@@ -18,6 +18,7 @@
 	display: inline-block;
 	margin: .3em;
 	border-radius: .5em;
+	-moz-border-radius: .5em;
 }
 #lang {
 	display: inline-block;
@@ -42,4 +43,5 @@
 	border-top: 2px solid;
 	border-left: 2px solid;
 	border-top-left-radius: .5em;
+	-moz-border-radius-topleft: .5em;
 }
