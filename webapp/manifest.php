@@ -12,7 +12,7 @@
 	continue;
     if (substr($file->getFilename(), 0, 1) == ".")
 	continue;
-    if ($file == $manifest || $file == $version)
+    if ($file == $manifest)
 	continue;
     $files .= substr($file, 2) . "\n";
     $mdate = max($mdate, filemtime($file)); 
