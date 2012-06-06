@@ -307,7 +307,8 @@ function update_cache(spot_id) {
 
 function cache_update_needed(spot_id) {
 	var last = localStorage.getItem("windguru.last_update."+spot_id);
-	if ( !last || (new Date().getTime() - last > 6*60*60*1000) )
+	var sixh = 6*60*60*1000;
+	if ( !last || parseInt(new Date().getTime() / sixh) * sixh > last )
 		return navigator.onLine;
 	return false;
 }
