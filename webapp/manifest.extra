@@ -1,7 +1,7 @@
 # cache i18n data
-data.php?,en,WgLang
-data.php?,fr,WgLang
-data.php?,cz,WgLang
+data.php?lang=en
+data.php?lang=fr
+data.php?lang=cz
 
 # configured languages
 http://www.windguru.cz/img/flags/en.png

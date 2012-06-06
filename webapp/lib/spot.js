@@ -241,8 +241,8 @@ function get_var(uri) {
 
 function get_params(spot_id) {
 	var lang = localStorage.getItem("windguru.language");
-	var spot_data = "data.php?" + spot_id + ",int,.*data_1";
-	var lang_data = "data.php?," + (lang ? lang : "fr") + ",WgLang";
+	var spot_data = "data.php?spot=" + spot_id;
+	var lang_data = "data.php?lang=" + (lang ? lang : "fr");
 	return {
 		data: get_var(spot_data),
 		opts: get_var("defaults/opts.js"),
