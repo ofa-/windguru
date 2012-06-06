@@ -1,21 +1,18 @@
 <?php
   header('Content-Type: text/cache-manifest');
 
-  $manifest = "./manifest.php";
-  $extra    = "./manifest.extra";
   $version  = "./version";
+  $extra    = "./manifest.extra";
   $files    = "";
   $mdate    = 0;
   $dir = new RecursiveDirectoryIterator(".");
   foreach(new RecursiveIteratorIterator($dir) as $file) {
+    $mdate = max($mdate, filemtime($file)); 
     if (!$file->IsFile())
 	continue;
-    if (substr($file->getFilename(), 0, 1) == ".")
-	continue;
-    if ($file == $manifest)
+    if (preg_match(":\.php$:", $file->getFilename()))
 	continue;
     $files .= substr($file, 2) . "\n";
-    $mdate = max($mdate, filemtime($file)); 
   }
   $date = date("Y-m-d H:i:s", $mdate);
   echo "CACHE MANIFEST\n";
