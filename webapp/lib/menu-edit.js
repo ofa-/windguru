@@ -247,11 +247,13 @@ function setup_controls_menu() {
 
 function disable_double_tap() {
 	document.addEventListener(
-	'touchend', function(e) {
-		var curr = new Date().getTime();
-		if (curr - e.target.last < 500)
+	'touchstart', function(e) {
+		var t2 = e.timeStamp;
+		var t1 = e.target.last;
+		var fingers = e.originalEvent.touches.length;
+		if (fingers == 1 && (t2 - t1) < 500 )
 			e.preventDefault();
-		e.target.last = curr;
+		e.target.last = t2;
 	}, false);
 }
 
