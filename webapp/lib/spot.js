@@ -354,7 +354,7 @@ function handle_orientation_change() {
 	};
 }
 
-function init() {
+function init_spot() {
 	var params = decodeURIComponent(location.search)
 			.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
 	if (!params || !params[1] || !params[2]) {
