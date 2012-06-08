@@ -50,18 +50,9 @@ function set_version() {
 	echo $version > version
 }
 
-shopt -s extglob
 function parse_version() {
-	shopt -s extglob
-	case $version in
-		+([0-9]).+([0-9])) ;;
-		*) error "invalid version spec: $version" ;;
-	esac
-	ret=$?
-	shopt -u extglob
-	return $ret
+	expr match $version '^[0-9]\+\.[0-9]\+$' > /dev/null
 }
-shopt -u extglob
 
 function publish_local_directory() {
 	lftp $URL/$DIR -e "mirror -X *.bak -X *.orig -Rn .; exit" || return 1
@@ -73,7 +64,7 @@ function main() {
 	load_config		|| abort "please edit config file: $CONFIG_FILE"
 	check_create_upload_dir	|| abort "cannot create upload directory: $DIR"
 	cd $SRC
-	set_version $1		|| error "failed to set new version"
+	set_version $1		|| error "failed to set version: $1"
 	publish_local_directory || abort "failed to publish directory: $SRC"
 }
 
