@@ -29,12 +29,20 @@ function exit_edit() {
 	_("spot_input").style.display = "none";
 	clear_curr();
 }
-	
+
+function get_current_page() {
+	var pages = _("contents").getElementsByTagName("page");
+	var page_height = document.defaultView.getComputedStyle(pages[0], "")
+			.getPropertyValue("height").replace(/px$/, "");
+	var idx = Math.floor(document.body.scrollTop / page_height);
+	return pages[idx];
+}
+
 function create_new_spot() {
 	var n = document.createElement("input");
 	init_button(n);
 	update_butt(n);
-	_("contents").getElementsByTagName("page")[0].appendChild(n);
+	get_current_page().appendChild(n);
 	set_curr(n);
 	animate_width(n, function () {
 	animate_width(n, function () {
