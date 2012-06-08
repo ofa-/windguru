@@ -373,7 +373,7 @@ function init() {
 		return;
 	}
 
-	var view = options.match(/,view=([12]),?/);
+	var view = options.match(/,view=([0-2]),?/);
 	set_view(view ? view[1] : 0);
 	//rescale();
 	hide_loading_indicator();
