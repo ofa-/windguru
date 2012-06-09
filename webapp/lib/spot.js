@@ -350,7 +350,6 @@ function build_fresh(spot_id, spot_name) {
 
 function handle_orientation_change() {
 	window.onorientationchange = function() {
-		window.scrollTo(document.body.scrollTop);
 	};
 }
 
