@@ -15,7 +15,8 @@ function input_load_page(e) {
 }
 
 function page_scroll_to_next(e) {
-	var page = this;
+	var div = e.target.parentNode.nextSibling;
+	_("contents").scrollTop = div ? div.offsetTop : 0;
 }
 
 function get_spots_menu() {
