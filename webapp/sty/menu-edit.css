@@ -1,3 +1,6 @@
+#contents {
+	overflow-x: hidden;
+}
 #contents div, #spot_input {
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
@@ -6,7 +9,7 @@
 	background: #ECCC66;
 }
 #controls {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 }
@@ -36,7 +39,7 @@ button img {
 }
 #spot_input {
 	display: none;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;

@@ -249,11 +249,17 @@ function setup_controls_menu() {
 	top_space.id = "top_space";
 	top_space.style.visibility = "hidden";
 	top_space.innerHTML = _("controls").innerHTML;
-	document.body.appendChild(top_space);
+	_("contents").appendChild(top_space);
 	document.body.appendChild(_("contents"));
 }
 
+function set_contents_height() {
+	_("contents").style.height = window.innerHeight + "px";
+}
+
 function init_menu_editor() {
-	init_content_panel();
 	setup_controls_menu();
+	init_content_panel();
+	set_contents_height();
+	window.onresize = set_contents_height;
 }

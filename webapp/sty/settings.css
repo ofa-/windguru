@@ -1,5 +1,5 @@
 #settings {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -30,11 +30,12 @@
 }
 
 #settings_button {
-	position: fixed;
+	position: absolute;
 	right: 0;
 	bottom: 0;
-	width: 1em;
+	width: 15px;
 	opacity: .5;
+	overflow: hidden;
 }
 #settings_button:hover  {
 	opacity: 1;

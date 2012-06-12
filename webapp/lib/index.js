@@ -59,10 +59,15 @@ function create_settings(dest) {
 	create_settings_button(document.body);
 }
 
+function set_contents_height() {
+	_("contents").style.height = window.innerHeight + "px";
+}
+
 function init_index() {
 	document.body.innerHTML = "<div id='contents'></div>";
-	var contents = _("contents");
-	create_menu(contents);
+	create_menu(_("contents"));
 	create_loading_blinder(document.body);
 	create_settings(document.body);
+	set_contents_height();
+	window.onresize = set_contents_height;
 }
