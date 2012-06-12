@@ -253,20 +253,7 @@ function setup_controls_menu() {
 	document.body.appendChild(_("contents"));
 }
 
-function disable_double_tap() {
-	document.addEventListener(
-	'touchstart', function(e) {
-		var t2 = e.timeStamp;
-		var t1 = e.target.last;
-		var fingers = e.originalEvent.touches.length;
-		if (fingers == 1 && (t2 - t1) < 500 )
-			e.preventDefault();
-		e.target.last = t2;
-	}, false);
-}
-
 function init_menu_editor() {
 	init_content_panel();
 	setup_controls_menu();
-	disable_double_tap();
 }
