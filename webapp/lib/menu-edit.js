@@ -35,9 +35,10 @@ function exit_edit() {
 
 function get_current_page() {
 	var pages = _("contents").getElementsByTagName("page");
-	var page_height = document.defaultView.getComputedStyle(pages[0], "")
+	var page_height = document.defaultView
+			.getComputedStyle(pages[0].parentNode, "")
 			.getPropertyValue("height").replace(/px$/, "");
-	var idx = Math.floor(document.body.scrollTop / page_height);
+	var idx = Math.round(_("contents").scrollTop / page_height);
 	return pages[idx];
 }
 
