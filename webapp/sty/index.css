@@ -4,8 +4,8 @@
 }
 #contents > div {
 	display: table;
-	margin: .5em auto;
-	padding: .3em;
+	margin: 0 auto;
+	padding: 10px;
 }
 page {
 	display: table-cell;

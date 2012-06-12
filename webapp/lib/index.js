@@ -60,7 +60,12 @@ function create_settings(dest) {
 }
 
 function set_contents_height() {
-	_("contents").style.height = window.innerHeight + "px";
+	var height = window.innerHeight;
+	_("contents").style.height = height + "px";
+
+	var list = document.getElementsByTagName("page");
+	for (var i=0; i < list.length; i++)
+		list[i].parentNode.style.height = (height - 20) + "px";
 }
 
 function init_index() {
