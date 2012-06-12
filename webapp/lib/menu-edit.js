@@ -254,7 +254,6 @@ function setup_controls_menu() {
 	top_space.style.visibility = "hidden";
 	top_space.innerHTML = _("controls").innerHTML;
 	_("contents").appendChild(top_space);
-	document.body.appendChild(_("contents"));
 }
 
 function set_contents_height() {
