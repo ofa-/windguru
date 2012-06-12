@@ -8,8 +8,11 @@ function add_spot() {
 
 function add_menu() {
 	var n = document.createElement("page");
+	var d = _("contents").insertBefore(
+		document.createElement("div"),
+		get_current_page().parentNode.nextSibling);
 	init_menu(n);
-	_("contents").appendChild(n);
+	d.appendChild(n);
 }
 
 function save_spot() {
