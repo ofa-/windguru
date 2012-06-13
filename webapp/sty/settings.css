@@ -32,7 +32,7 @@
 #settings_button {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: -40px;
 	width: 15px;
 	opacity: .5;
 	overflow: hidden;
