@@ -314,7 +314,7 @@ function cache_update_needed(spot_id) {
 }
 
 function mark_cache_update_needed(spot_id) {
-	localStorage.setItem("windguru.last_update."+spot_id, null);
+	localStorage.removeItem("windguru.last_update."+spot_id);
 }
 
 function build_from_cache(spot_id) {
