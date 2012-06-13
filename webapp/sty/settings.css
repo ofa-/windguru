@@ -36,6 +36,9 @@
 	width: 15px;
 	opacity: .5;
 	overflow: hidden;
+	transition: width .3s;
+	-webkit-transition: width .3s;
+	-moz-transition: width .3s;
 }
 #settings_button:hover  {
 	opacity: 1;
