@@ -348,11 +348,6 @@ function build_fresh(spot_id, spot_name) {
 	add_anti_click_and_buttons();
 }
 
-function handle_orientation_change() {
-	window.onorientationchange = function() {
-	};
-}
-
 function init_spot() {
 	var params = decodeURIComponent(location.search)
 			.match(/([0-9]+)[-:|_]([^,]*)(.*)/);
@@ -381,6 +376,5 @@ function init_spot() {
 	var view = options.match(/,view=([0-2]),?/);
 	set_view(view ? view[1] : 0);
 	//rescale();
-	handle_orientation_change();
 	hide_loading_indicator();
 }
