@@ -15,8 +15,15 @@ function input_load_page(e) {
 }
 
 function page_scroll_to_next(e) {
-	var div = e.target.parentNode.nextSibling;
-	_("contents").scrollTop = div ? div.offsetTop : 0;
+	var div = e.target.parentNode;
+	var contents = _("contents");
+	if (contents.scrollTop != div.offsetTop) {
+		contents.scrollTop = div.offsetTop;
+	}
+	else {
+		div = div.nextSibling;
+		contents.scrollTop = div ? div.offsetTop : 0;
+	}
 }
 
 function get_spots_menu() {
