@@ -199,6 +199,7 @@ function install_loading_indicator(txt) {
 	var div = _("loading-blinder");
 	var elt = document.createElement("center");
 	document.title = txt;
+	div.style.display = "table";
 	elt.innerHTML = txt ? txt : "Loading";
 	div.appendChild(elt);
 	elt = create_spinner();

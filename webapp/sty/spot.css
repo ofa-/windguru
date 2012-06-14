@@ -30,13 +30,6 @@
 	background-size: 15px 15px;
 }
 
-/* no copy/paste */
-body { -webkit-user-select: none; }
-
-/* no resize while building forecast views */
-body { background: #130368; overflow:hidden; }
-
-
 /* prevent clicking, navigation buttons */
 #anti_click, #home_button {
 	position: absolute;
@@ -54,51 +47,14 @@ body { background: #130368; overflow:hidden; }
 	background: #008000 url('../img/home.png') no-repeat center center;
 	opacity: .8;
 }
-
-#container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 0;
-	margin: 0;
-}
-
-/* center on page ... */
 #container {
 	display: table;
-	width: 100%;
+	margin: auto;
 	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 #container center {
 	display: table-cell;
 	vertical-align: middle;
 }
-
-#loading-blinder {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	display: table;
-	background-color: #130368;
-	z-index: 1;
-}
-#loading-blinder center {
-	display: table-cell;
-	vertical-align: middle;
-	color: orange;
-	font-size: 20pt;
-	font-family: Helvetica;
-}
-#loading-blinder .spinner {
-	position: absolute;
-	top: 20%;
-	left: 20%;
-	width: 60%;
-	height: 60%;
-}
-#loading-blinder .spinner div {
-	background: #c00;
-}
-
