@@ -71,9 +71,10 @@ function set_contents_height() {
 	var height = window.innerHeight;
 	_("contents").style.height = height + "px";
 
+	var padding = navigator.userAgent.match(/iPhone/) ? 0 : 20;
 	var list = document.getElementsByTagName("page");
 	for (var i=0; i < list.length; i++)
-		list[i].parentNode.style.height = (height - 20) + "px";
+		list[i].parentNode.style.height = (height - padding) + "px";
 }
 
 function init_index() {
