@@ -10,7 +10,7 @@ function input_load_page(e) {
 	_("settings_button").style.display = "none";
 	_("loading-blinder").firstChild.innerHTML = butt.value;
 	_("loading-blinder").style.display = "table";
-	var spot_specs = butt.getAttribute("spot") + "|" + butt.value;
+	var spot_specs = butt.getAttribute("spot") + ":" + butt.value;
 	location.replace("spot.html?" + spot_specs);
 }
 
