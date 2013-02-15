@@ -1,5 +1,69 @@
 #!/bin/bash
 
+function usage() {
+	echo "usage: $(basename $0) <command>"
+	echo "   -d: daemon"
+	echo "   -s: status"
+	echo "   -f: fetch" 
+	echo "   -u: upload" 
+	echo "   -c: check" 
+	echo "   -k: kill daemon" 
+}
+
+function _main() {
+	init
+	while [ "$1" ] ; do
+		main $1
+		shift
+	done
+}
+
+function init() {
+	BASE_DIR=$(dirname "$0")
+	CONF_LIB="$BASE_DIR/conf.sh"
+	source "$CONF_LIB"
+	init_conf
+	mkdir -p "$DOCS"
+	mkdir -p "$DOCS/data"
+}
+
+function main() {
+	case $1 in
+	-d)
+		daemon > /dev/null 2>&1 &
+		;;
+	-s)
+		show_status
+		;;
+	-S)
+		copy_statics
+		;;
+	-f)
+		fetch_forecasts
+		;;
+	-u)
+		upload_dir "data"
+		;;
+	-U)
+		copy_statics
+		upload_dir ""
+		;;
+	-c)
+		check_updates || exit 1
+		;;
+	-k)
+		$0 -s | awk '{print $1}' | xargs kill -9 
+		;;
+	"")
+		usage
+		;;
+	*)
+		usage
+		exit 1
+		;;
+	esac
+}
+
 function fetch_forecasts() {
 	list_spots $1 |\
 	while read l; do
@@ -118,65 +182,4 @@ function show_status() {
 	fi
 }
 
-function init() {
-	BASE_DIR=$(dirname "$0")
-	CONF_LIB="$BASE_DIR/conf.sh"
-	source "$CONF_LIB"
-	init_conf
-	mkdir -p "$DOCS"
-	mkdir -p "$DOCS/data"
-}
-
-function usage() {
-	echo "usage: $(basename $0) <command>"
-	echo "   -d: daemon"
-	echo "   -s: status"
-	echo "   -f: fetch" 
-	echo "   -u: upload" 
-	echo "   -c: check" 
-	echo "   -k: kill daemon" 
-}
-
-function main() {
-	case $1 in
-	-d)
-		daemon > /dev/null 2>&1 &
-		;;
-	-s)
-		show_status
-		;;
-	-S)
-		copy_statics
-		;;
-	-f)
-		fetch_forecasts
-		;;
-	-u)
-		upload_dir "data"
-		;;
-	-U)
-		copy_statics
-		upload_dir ""
-		;;
-	-c)
-		check_updates || exit 1
-		;;
-	-k)
-		$0 -s | awk '{print $1}' | xargs kill -9 
-		;;
-	"")
-		usage
-		;;
-	*)
-		usage
-		exit 1
-		;;
-	esac
-}
-
-init
-while true; do
-	main $1
-	shift
-	[ "$1" ] || break
-done
+_main "$@"
