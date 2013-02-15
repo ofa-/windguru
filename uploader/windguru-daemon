@@ -136,7 +136,7 @@ function check_updates() {
 		printf "Updating... "
 		mv $tmp_file $ref_file
 		fetch_forecasts "|sed'1,1d'" || { fatal "fetch_forecasts"; return; }
-		echo "Update done: $curr_date"
+		printf "\rUpdate done: $curr_date\n"
 		kill %1
 		return 0
 	fi
