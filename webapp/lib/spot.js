@@ -134,11 +134,8 @@ function update_params(params, spot_name) {
 	params.WgFcst = load_scripts(params.lang);
 }
 
-function has_low_temp(data) {
-	for (var i in data.TMPE)
-		if (data.TMPE[i] < 5)
-			return true;
-	return false;
+function has_high_flhgt(data) {
+	return Math.min.apply(Math, data.FLHGT) > 3000;
 }
 
 function move_view_up_in_tree(depth) {
@@ -154,8 +151,8 @@ function move_view_up_in_tree(depth) {
 
 function build_std_view(params) {
 	var data = params.data.fcst[params.data.id_model];
-	if (has_low_temp(data)) {
-		params.opts.params.push("FLHGT");
+	if (has_high_flhgt(data)) {
+		data.FLHGT = null;
 	}
 	build_forecast(params, 1);
 	move_view_up_in_tree(1);
@@ -164,11 +161,15 @@ function build_std_view(params) {
 function build_graph_view(params) {
 	var data = params.data.fcst[params.data.id_model];
 	data.RH  = null; // removes info from graphic view
+	data.SLP = null; // removes info from graphic view
 
-	// use SLP to show iso0 in graphic views (see graph_set_iso0_labels())
-	data.SLP = [];
-	for (var i in data.FLHGT)
-		data.SLP.push(data.FLHGT[i]/100+1000);
+	if (data.FLHGT) {
+		// use SLP to show iso0 in graphic views
+		// (see graph_set_iso0_labels())
+		data.SLP = [];
+		for (var i in data.FLHGT)
+			data.SLP.push(data.FLHGT[i]/100+1000);
+		}
 
 	build_forecast(params, 2);
 	var graph = move_view_up_in_tree(2);
@@ -177,7 +178,7 @@ function build_graph_view(params) {
 
 	var low_temps = graph.select_temp_below(0);
 	graph.set_temp_circle_colors(low_temps, "red");
-	graph.set_iso0_labels();
+	if (data.FLHGT) graph.set_iso0_labels();
 	graph.update_size();
 }
 
