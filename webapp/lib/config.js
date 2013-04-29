@@ -100,6 +100,8 @@ function update_progress() {
 function update_ready() {
 	var ver_key = "windguru.version";
 	localStorage.removeItem(ver_key);
+        var langs_key = "windguru.languages";
+        localStorage.removeItem(langs_key);
 	location.reload();
 }
 
