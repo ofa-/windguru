@@ -3,6 +3,7 @@
 <menu>
 <page>
 <input value="Grenoble"		spot="18666"	/>
+<input value="São Paulo"	spot="71485"    />
 <input value="Paris"		spot="171393"	/>
 <input value="Dublin"		spot="240877"	/>
 <input value="Poprad"		spot="63770"	/>
