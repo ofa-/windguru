@@ -1,11 +1,13 @@
 # cache i18n data
 data.php?lang=en
 data.php?lang=fr
+data.php?lang=pt
 data.php?lang=cz
 
 # configured languages
 http://www.windguru.cz/img/flags/en.png
 http://www.windguru.cz/img/flags/fr.png
+http://www.windguru.cz/img/flags/br.png
 http://www.windguru.cz/img/flags/cz.png
 # other languages:
 # baq, bg, de, dk, ee, es, nl, fi, gl, hu
