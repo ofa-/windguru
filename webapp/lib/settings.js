@@ -32,6 +32,7 @@ function create_settings_dialog(target) {
 		var controller = lang_controller();
 		controller.click();
 		controller.update_buttons(_("settings"));
+		clear_spots_cache(); // in config.js
 	});
 	create_button(target, "search", function () {
 		location.assign("http://www.windguru.cz/touch/"

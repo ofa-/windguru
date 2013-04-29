@@ -119,3 +119,11 @@ function clear_local_storage() {
 	}
 	return false;
 }
+
+function clear_spots_cache() {
+	for (var k in localStorage) {
+		if (k.indexOf("windguru.last_update.") == 0) {
+			localStorage.removeItem(k);
+		}
+	}
+}
