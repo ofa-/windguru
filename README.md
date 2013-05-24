@@ -22,7 +22,7 @@ Using the webapp
 The webapp homepage shows a menu of pre-configured spots.  The menu supports
 several layers - or screens - allowing to group spots by categories.  Specific
 individual spots can be accessed directly using the following url:
-``<website>/spot.html?<spot id>|<spot name>``
+``<website>/spot.html?<spot id>:<spot name>``
 
 
 The menu screen buttons bring up individual spots forecast screens.  Clicking 
