@@ -60,7 +60,7 @@ function graph_select_temp_below(temp) {
 	var grp = this.getElementsByTagName("g");
 	var txt = grp[3].getElementsByTagName("text");
 	var ret = [];
-	for (var i=txt.length - 1 ;; i--) {
+	for (var i=txt.length - 1 ; i>=0; i--) {
 		if (txt[i].getAttribute("fill"))
 			break;
 		ret.push( parseInt(txt[i].firstChild.nodeValue) <= temp );
