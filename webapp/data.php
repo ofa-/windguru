@@ -6,7 +6,7 @@ function main() {
 	if ($args[0] == "spot") {
 		$spot = $args[1];
 		$lang = "int";
-		$what = ".*data_1";
+		$what = 'wg_fcst_tab_data_.*"model"\:"gfs"';
 	}
 	else
 	if ($args[0] == "lang") {
@@ -21,7 +21,7 @@ function main() {
 		return;
 	}
 
-	$SPOT = "http://www.windguru.cz/$lang/print.php?typ=spot&sn=$spot";
+	$SPOT = "http://old.windguru.cz/$lang/print.php?typ=spot&sn=$spot";
 	$OPTS = "&go=1&vs=1&wj=kmh&tj=c&odh=0&doh=24&fhours=180";
 
 	$html = file($SPOT . $OPTS);
