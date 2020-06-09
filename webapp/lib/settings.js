@@ -35,7 +35,7 @@ function create_settings_dialog(target) {
 		clear_spots_cache(); // in config.js
 	});
 	create_button(target, "search", function () {
-		location.assign("http://www.windguru.cz/touch/"
+		location.assign("http://old.windguru.cz/touch/"
 			+ lang_controller().get_lang()
 			+ "/search.php"
 		);
